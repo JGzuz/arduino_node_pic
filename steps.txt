@@ -12,3 +12,20 @@ https://serialport.io/docs/guide-usage //script de serialport
 - npm install serialport
 
 
+1: comunicar arduino con pc
+   OK: comunicacion establecida
+
+2: comunicar arduino con pic
+   Status: conecion de circuto pic: OK
+   puerto virtual arduino: hecho..en revision
+
+3: enviar datos de pic a arduino y de arduino a node para que los analize
+
+4: una vez enviados los datos en node, procesarlos, enviar una respuesta a arduino y de arduino a pic
+
+5: en base a la respuesta encender o apagar un led
+
+1: comunicar arduino con node, para esto necesitamos hacer un skech en arduino y un proyecto en node
+
+2: comunicar arduino con pic, como ya se esta comunicando nuestro arduino con la pc, tenemos
+que hacer un puerto virtual para podernos comunir con arduino, 

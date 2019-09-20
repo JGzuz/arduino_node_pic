@@ -1,0 +1,47 @@
+#include <16f877a.h>//pic a utilizar
+#fuses hs, nowdt, noprotect, noput
+#use delay(clock=20M)//cristal
+#use rs232(baud=115200, rcv=pin_c7, xmit=pin_c6, bits=8, parity=N)//configuracion transmision en serie
+#use standard_io(c)
+
+   
+   
+   void main () {
+   
+    char leer;
+    //char escribe;
+    set_tris_b(0b00000000);//configuracion pines puerto b como salida
+    output_b(0b00000000);//estado en bajo de todos los pines del puerto b
+    int i=0;
+   
+      while(true){  
+      
+      //checa si hay datos en bufer//////////////
+      if(kbhit()){
+         leer=getc();//almacena datos en leer
+         if(leer=="OK"){
+            output_high(pin_b0);
+         }
+         if(leer!="OK"){
+            output_low(pin_b0);
+         }
+      }///////////////////////////////////////////
+      
+      //mandar un numero a arduino por serie
+      if(input(pin_b1)==1){
+         switch (i){
+         case 0:puts("4661056410");break;
+         case 1:puts("4571234565");break;
+         case 2:puts("4321082124");break;
+         case 3:puts("5554545714");break;
+         case 4:puts("6666645465");break;
+         default:break;
+         }i++;
+         if(i==5)i=0;
+      }
+      
+      
+   
+      }//fin ciclo principal
+   }
+

@@ -6,6 +6,12 @@ mySerial.on("open", function() {
     console.log("COMUNICACION SERIAL ABIERTA")
 })
 
+//escucha datos en buffer
 mySerial.on("data", function (data) {
     console.log(data.toString())
+})
+
+//evento de error
+mySerial.on("err", function(err) {
+    console.log(err.message)
 })

@@ -1,0 +1,376 @@
+CCS PCM C Compiler, Version 5.015, 5967               20-sep.-19 13:54
+
+               Filename:   C:\Users\Morpheus\Desktop\ANP\codigo_pic\com_serial_pic.lst
+
+               ROM used:   299 words (4%)
+                           Largest free fragment is 2048
+               RAM used:   8 (2%) at main() level
+                           12 (3%) worst case
+               Stack used: 1 locations
+               Stack size: 8
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   080
+0003:  NOP
+.................... #include <16f877a.h>//pic a utilizar 
+.................... //////////// Standard Header file for the PIC16F877A device //////////////// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996, 2013 Custom Computer Services          //// 
+.................... //// This source code may only be used by licensed users of the CCS C  //// 
+.................... //// compiler.  This source code may only be distributed to other      //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction //// 
+.................... //// or distribution is permitted without written permission.          //// 
+.................... //// Derivative programs created using this software in object code    //// 
+.................... //// form are not restricted in any way.                               //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... #device PIC16F877A 
+0004:  RETLW  4F
+0005:  RETLW  4B
+0006:  RETLW  00
+0007:  RETLW  4F
+0008:  RETLW  4B
+0009:  RETLW  00
+000A:  DATA 34,1B
+000B:  DATA B6,18
+000C:  DATA B0,1A
+000D:  DATA 36,1A
+000E:  DATA 31,18
+000F:  DATA 00,00
+0010:  DATA B4,1A
+0011:  DATA B7,18
+0012:  DATA B2,19
+0013:  DATA B4,1A
+0014:  DATA B6,1A
+0015:  DATA 00,01
+0016:  DATA B4,19
+0017:  DATA B2,18
+0018:  DATA 30,1C
+0019:  DATA B2,18
+001A:  DATA 32,1A
+001B:  DATA 00,01
+001C:  DATA B5,1A
+001D:  DATA 35,1A
+001E:  DATA 35,1A
+001F:  DATA B5,1B
+0020:  DATA 31,1A
+0021:  DATA 00,01
+0022:  DATA 36,1B
+0023:  DATA 36,1B
+0024:  DATA 36,1A
+0025:  DATA 35,1A
+0026:  DATA B6,1A
+0027:  DATA 00,00
+0028:  MOVF   0B,W
+0029:  MOVWF  23
+002A:  BCF    0B.7
+002B:  BSF    03.5
+002C:  BSF    03.6
+002D:  BSF    0C.7
+002E:  BSF    0C.0
+002F:  NOP
+0030:  NOP
+0031:  BCF    03.5
+0032:  BCF    03.6
+0033:  BTFSC  23.7
+0034:  BSF    0B.7
+0035:  BSF    03.6
+0036:  MOVF   0C,W
+0037:  ANDLW  7F
+0038:  BTFSC  03.2
+0039:  GOTO   07E
+003A:  BCF    03.6
+003B:  MOVWF  23
+003C:  BSF    03.6
+003D:  MOVF   0D,W
+003E:  BCF    03.6
+003F:  MOVWF  24
+0040:  BSF    03.6
+0041:  MOVF   0F,W
+0042:  BCF    03.6
+0043:  MOVWF  25
+0044:  MOVF   23,W
+0045:  BTFSS  0C.4
+0046:  GOTO   045
+0047:  MOVWF  19
+0048:  MOVF   24,W
+0049:  BSF    03.6
+004A:  MOVWF  0D
+004B:  BCF    03.6
+004C:  MOVF   25,W
+004D:  BSF    03.6
+004E:  MOVWF  0F
+004F:  BCF    03.6
+0050:  MOVF   0B,W
+0051:  MOVWF  26
+0052:  BCF    0B.7
+0053:  BSF    03.5
+0054:  BSF    03.6
+0055:  BSF    0C.7
+0056:  BSF    0C.0
+0057:  NOP
+0058:  NOP
+0059:  BCF    03.5
+005A:  BCF    03.6
+005B:  BTFSC  26.7
+005C:  BSF    0B.7
+005D:  BSF    03.6
+005E:  RLF    0C,W
+005F:  RLF    0E,W
+0060:  ANDLW  7F
+0061:  BTFSC  03.2
+0062:  GOTO   07E
+0063:  BCF    03.6
+0064:  MOVWF  23
+0065:  BSF    03.6
+0066:  MOVF   0D,W
+0067:  BCF    03.6
+0068:  MOVWF  24
+0069:  BSF    03.6
+006A:  MOVF   0F,W
+006B:  BCF    03.6
+006C:  MOVWF  25
+006D:  MOVF   23,W
+006E:  BTFSS  0C.4
+006F:  GOTO   06E
+0070:  MOVWF  19
+0071:  MOVF   24,W
+0072:  BSF    03.6
+0073:  MOVWF  0D
+0074:  BCF    03.6
+0075:  MOVF   25,W
+0076:  BSF    03.6
+0077:  MOVWF  0F
+0078:  INCF   0D,F
+0079:  BTFSC  03.2
+007A:  INCF   0F,F
+007B:  BCF    03.6
+007C:  GOTO   028
+007D:  BSF    03.6
+007E:  BCF    03.6
+007F:  RETURN
+....................  
+.................... #list 
+....................  
+.................... #fuses hs, nowdt, noprotect, noput 
+.................... #use delay(clock=20M)//cristal 
+.................... #use rs232(baud=115200, rcv=pin_c7, xmit=pin_c6, bits=8, parity=N)//configuracion transmision en serie 
+.................... #use standard_io(c) 
+....................  
+....................     
+....................     
+....................    void main () { 
+0080:  MOVF   03,W
+0081:  ANDLW  1F
+0082:  MOVWF  03
+0083:  MOVLW  0A
+0084:  BSF    03.5
+0085:  MOVWF  19
+0086:  MOVLW  A6
+0087:  MOVWF  18
+0088:  MOVLW  90
+0089:  BCF    03.5
+008A:  MOVWF  18
+008B:  MOVLW  FF
+008C:  MOVWF  20
+008D:  BSF    03.5
+008E:  BSF    1F.0
+008F:  BSF    1F.1
+0090:  BSF    1F.2
+0091:  BCF    1F.3
+0092:  MOVLW  07
+0093:  MOVWF  1C
+0094:  BCF    03.7
+....................     
+....................     char leer; 
+....................     //char escribe; 
+....................     set_tris_b(0b00000000);//configuracion pines puerto b como salida 
+0095:  MOVLW  00
+0096:  MOVWF  06
+....................     output_b(0b00000000);//estado en bajo de todos los pines del puerto b 
+0097:  CLRF   06
+0098:  BCF    03.5
+0099:  CLRF   06
+....................     output_high(pin_b7);//salida en alto para indicar que el pic ha iniciado 
+009A:  BSF    03.5
+009B:  BCF    06.7
+009C:  BCF    03.5
+009D:  BSF    06.7
+....................     int i=0; 
+009E:  CLRF   22
+....................     
+....................       while(true){   
+....................        
+....................       //checa si hay datos en bufer////////////// 
+....................       if(kbhit()){ 
+009F:  BTFSS  0C.5
+00A0:  GOTO   0BF
+....................          leer=getc();//almacena datos en leer 
+00A1:  BTFSS  0C.5
+00A2:  GOTO   0A1
+00A3:  MOVF   1A,W
+00A4:  MOVWF  21
+....................          if(leer=="OK"){ 
+00A5:  MOVLW  00
+00A6:  MOVWF  7A
+00A7:  MOVLW  04
+00A8:  SUBWF  21,W
+00A9:  BTFSS  03.2
+00AA:  GOTO   0B2
+00AB:  MOVF   7A,F
+00AC:  BTFSS  03.2
+00AD:  GOTO   0B2
+....................             output_high(pin_b0); 
+00AE:  BSF    03.5
+00AF:  BCF    06.0
+00B0:  BCF    03.5
+00B1:  BSF    06.0
+....................          } 
+....................          if(leer!="OK"){ 
+00B2:  MOVLW  00
+00B3:  MOVWF  7A
+00B4:  MOVLW  07
+00B5:  SUBWF  21,W
+00B6:  BTFSS  03.2
+00B7:  GOTO   0BB
+00B8:  MOVF   7A,F
+00B9:  BTFSC  03.2
+00BA:  GOTO   0BF
+....................             output_low(pin_b0); 
+00BB:  BSF    03.5
+00BC:  BCF    06.0
+00BD:  BCF    03.5
+00BE:  BCF    06.0
+....................          } 
+....................       }/////////////////////////////////////////// 
+....................        
+....................       //mandar un numero a arduino por serie 
+....................       if(input(pin_b1)==1){ 
+00BF:  BSF    03.5
+00C0:  BSF    06.1
+00C1:  BCF    03.5
+00C2:  BTFSS  06.1
+00C3:  GOTO   129
+....................          switch (i){ 
+00C4:  MOVF   22,W
+00C5:  BTFSC  03.2
+00C6:  GOTO   0D4
+00C7:  XORLW  01
+00C8:  BTFSC  03.2
+00C9:  GOTO   0E4
+00CA:  XORLW  03
+00CB:  BTFSC  03.2
+00CC:  GOTO   0F4
+00CD:  XORLW  01
+00CE:  BTFSC  03.2
+00CF:  GOTO   104
+00D0:  XORLW  07
+00D1:  BTFSC  03.2
+00D2:  GOTO   114
+00D3:  GOTO   124
+....................          case 0:puts("4661056410");break; 
+00D4:  MOVLW  0A
+00D5:  BSF    03.6
+00D6:  MOVWF  0D
+00D7:  MOVLW  00
+00D8:  MOVWF  0F
+00D9:  BCF    03.6
+00DA:  CALL   028
+00DB:  MOVLW  0D
+00DC:  BTFSS  0C.4
+00DD:  GOTO   0DC
+00DE:  MOVWF  19
+00DF:  MOVLW  0A
+00E0:  BTFSS  0C.4
+00E1:  GOTO   0E0
+00E2:  MOVWF  19
+00E3:  GOTO   124
+....................          case 1:puts("4571234565");break; 
+00E4:  MOVLW  10
+00E5:  BSF    03.6
+00E6:  MOVWF  0D
+00E7:  MOVLW  00
+00E8:  MOVWF  0F
+00E9:  BCF    03.6
+00EA:  CALL   028
+00EB:  MOVLW  0D
+00EC:  BTFSS  0C.4
+00ED:  GOTO   0EC
+00EE:  MOVWF  19
+00EF:  MOVLW  0A
+00F0:  BTFSS  0C.4
+00F1:  GOTO   0F0
+00F2:  MOVWF  19
+00F3:  GOTO   124
+....................          case 2:puts("4321082124");break; 
+00F4:  MOVLW  16
+00F5:  BSF    03.6
+00F6:  MOVWF  0D
+00F7:  MOVLW  00
+00F8:  MOVWF  0F
+00F9:  BCF    03.6
+00FA:  CALL   028
+00FB:  MOVLW  0D
+00FC:  BTFSS  0C.4
+00FD:  GOTO   0FC
+00FE:  MOVWF  19
+00FF:  MOVLW  0A
+0100:  BTFSS  0C.4
+0101:  GOTO   100
+0102:  MOVWF  19
+0103:  GOTO   124
+....................          case 3:puts("5554545714");break; 
+0104:  MOVLW  1C
+0105:  BSF    03.6
+0106:  MOVWF  0D
+0107:  MOVLW  00
+0108:  MOVWF  0F
+0109:  BCF    03.6
+010A:  CALL   028
+010B:  MOVLW  0D
+010C:  BTFSS  0C.4
+010D:  GOTO   10C
+010E:  MOVWF  19
+010F:  MOVLW  0A
+0110:  BTFSS  0C.4
+0111:  GOTO   110
+0112:  MOVWF  19
+0113:  GOTO   124
+....................          case 4:puts("6666645465");break; 
+0114:  MOVLW  22
+0115:  BSF    03.6
+0116:  MOVWF  0D
+0117:  MOVLW  00
+0118:  MOVWF  0F
+0119:  BCF    03.6
+011A:  CALL   028
+011B:  MOVLW  0D
+011C:  BTFSS  0C.4
+011D:  GOTO   11C
+011E:  MOVWF  19
+011F:  MOVLW  0A
+0120:  BTFSS  0C.4
+0121:  GOTO   120
+0122:  MOVWF  19
+0123:  GOTO   124
+....................          default:break; 
+....................          }i++; 
+0124:  INCF   22,F
+....................          if(i==5)i=0; 
+0125:  MOVF   22,W
+0126:  SUBLW  05
+0127:  BTFSC  03.2
+0128:  CLRF   22
+....................       } 
+0129:  GOTO   09F
+....................        
+....................        
+....................     
+....................       }//fin ciclo principal 
+....................    } 
+....................  
+012A:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3F7A   HS NOWDT NOPUT BROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT
