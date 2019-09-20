@@ -1,0 +1,14 @@
+zuz to zuz
+1:instala github en tu pc
+2:clona el proyecto
+3:usa npm install para bajar las dependcias, necesitamos la de serialport
+
+
+--------------------------
+https://serialport.io/docs/guide-usage //script de serialport
+--------------------------
+- crear carpeta con index.js
+- npm init --yes
+- npm install serialport
+
+
