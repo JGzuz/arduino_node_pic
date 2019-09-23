@@ -1,9 +1,9 @@
 
-ROM used:   299/8192 (4%)
-            299/8192 (4%) including unused fragments
+ROM used:   338/8192 (4%)
+            338/8192 (4%) including unused fragments
 
-            0.4 Average locations per line
-            9.3 Average locations per statement
+            0.5 Average locations per line
+            9.7 Average locations per statement
 
 RAM used:   8/368 (2%) at main() level
             12/368 (3%) worst case
@@ -13,18 +13,19 @@ Stack size: 8
 
 Lines Stmts  %   Files
 ----- ----- ---  -----
-   49    32 100  com_serial_pic.c
+   51    35 100  com_serial_pic.c
   671     0   0  ..\..\..\..\..\Program Files (x86)\PICC\Devices\16f877a.h
 ----- -----
-  720    32 Total
+  722    35 Total
 
 Page ROM  %  RAM   Vol Diff  Functions:
 ---- --- --- ---   --- ----  ----------
-0    171  57    2   774  6.6  main
+0     22   7    1             @delay_ms1
+0    188  56    2   864  6.6  main
 0      3   1    0             @const630
 0      3   1    0             @const631
 0      6   2    0             @const632
-0     88  29    4             @PSTRINGC7_1
+0     88  26    4             @PSTRINGC7_1
 0      6   2    0             @const634
 0      6   2    0             @const635
 0      6   2    0             @const636
@@ -33,20 +34,20 @@ Page ROM  %  RAM   Vol Diff  Functions:
 
 Program metrics:
     Functions               1
-    Statements              32
+    Statements              35
     Comments                128
-    Volume (V)              798
+    Volume (V)              891
     Difficulty (D)          5.6
-    Effort to implement (E) 4453
-    Time to implement (T)   4 minutes
+    Effort to implement (E) 5011
+    Time to implement (T)   5 minutes
     Est Delivered Bugs (B)  0
     Cyclomatic Complexity   11
-    Maintainability (MI)    29
+    Maintainability (MI)    27
 
  Segment     Used  Free
 -----------  ----  ----
 00000-00003     4  0  
-00004-007FF   295  1749  
+00004-007FF   334  1710  
 00800-00FFF     0  2048  
 01000-017FF     0  2048  
 01800-01FFF     0  2048  

@@ -1,8 +1,8 @@
-CCS PCM C Compiler, Version 5.015, 5967               20-sep.-19 13:54
+CCS PCM C Compiler, Version 5.015, 5967               23-sep.-19 10:38
 
                Filename:   C:\Users\Morpheus\Desktop\ANP\codigo_pic\com_serial_pic.lst
 
-               ROM used:   299 words (4%)
+               ROM used:   338 words (4%)
                            Largest free fragment is 2048
                RAM used:   8 (2%) at main() level
                            12 (3%) worst case
@@ -12,7 +12,7 @@ CCS PCM C Compiler, Version 5.015, 5967               20-sep.-19 13:54
 *
 0000:  MOVLW  00
 0001:  MOVWF  0A
-0002:  GOTO   080
+0002:  GOTO   096
 0003:  NOP
 .................... #include <16f877a.h>//pic a utilizar 
 .................... //////////// Standard Header file for the PIC16F877A device //////////////// 
@@ -32,35 +32,35 @@ CCS PCM C Compiler, Version 5.015, 5967               20-sep.-19 13:54
 0007:  RETLW  4F
 0008:  RETLW  4B
 0009:  RETLW  00
-000A:  DATA 34,1B
-000B:  DATA B6,18
-000C:  DATA B0,1A
-000D:  DATA 36,1A
-000E:  DATA 31,18
+000A:  DATA B0,18
+000B:  DATA B2,19
+000C:  DATA B4,1A
+000D:  DATA B6,1B
+000E:  DATA B8,1C
 000F:  DATA 00,00
-0010:  DATA B4,1A
-0011:  DATA B7,18
-0012:  DATA B2,19
-0013:  DATA B4,1A
-0014:  DATA B6,1A
+0010:  DATA B1,18
+0011:  DATA B1,18
+0012:  DATA B1,18
+0013:  DATA B1,18
+0014:  DATA B1,18
 0015:  DATA 00,01
-0016:  DATA B4,19
-0017:  DATA B2,18
-0018:  DATA 30,1C
-0019:  DATA B2,18
-001A:  DATA 32,1A
+0016:  DATA 32,19
+0017:  DATA 32,19
+0018:  DATA 32,19
+0019:  DATA 32,19
+001A:  DATA 32,19
 001B:  DATA 00,01
-001C:  DATA B5,1A
-001D:  DATA 35,1A
-001E:  DATA 35,1A
-001F:  DATA B5,1B
-0020:  DATA 31,1A
+001C:  DATA B3,19
+001D:  DATA B3,19
+001E:  DATA B3,19
+001F:  DATA B3,19
+0020:  DATA B3,19
 0021:  DATA 00,01
-0022:  DATA 36,1B
-0023:  DATA 36,1B
-0024:  DATA 36,1A
-0025:  DATA 35,1A
-0026:  DATA B6,1A
+0022:  DATA 34,1A
+0023:  DATA 34,1A
+0024:  DATA 34,1A
+0025:  DATA 34,1A
+0026:  DATA 34,1A
 0027:  DATA 00,00
 0028:  MOVF   0B,W
 0029:  MOVWF  23
@@ -155,156 +155,156 @@ CCS PCM C Compiler, Version 5.015, 5967               20-sep.-19 13:54
 ....................  
 .................... #fuses hs, nowdt, noprotect, noput 
 .................... #use delay(clock=20M)//cristal 
-.................... #use rs232(baud=115200, rcv=pin_c7, xmit=pin_c6, bits=8, parity=N)//configuracion transmision en serie 
+0080:  MOVLW  24
+0081:  MOVWF  04
+0082:  BCF    03.7
+0083:  MOVF   00,W
+0084:  BTFSC  03.2
+0085:  GOTO   093
+0086:  MOVLW  06
+0087:  MOVWF  78
+0088:  CLRF   77
+0089:  DECFSZ 77,F
+008A:  GOTO   089
+008B:  DECFSZ 78,F
+008C:  GOTO   088
+008D:  MOVLW  7B
+008E:  MOVWF  77
+008F:  DECFSZ 77,F
+0090:  GOTO   08F
+0091:  DECFSZ 00,F
+0092:  GOTO   086
+0093:  BCF    0A.3
+0094:  BCF    0A.4
+0095:  GOTO   14A (RETURN)
+.................... #use rs232(baud=9600, rcv=pin_c7, xmit=pin_c6, bits=8, parity=N)//configuracion transmision en serie 
 .................... #use standard_io(c) 
 ....................  
 ....................     
 ....................     
 ....................    void main () { 
-0080:  MOVF   03,W
-0081:  ANDLW  1F
-0082:  MOVWF  03
-0083:  MOVLW  0A
-0084:  BSF    03.5
-0085:  MOVWF  19
-0086:  MOVLW  A6
-0087:  MOVWF  18
-0088:  MOVLW  90
-0089:  BCF    03.5
-008A:  MOVWF  18
-008B:  MOVLW  FF
-008C:  MOVWF  20
-008D:  BSF    03.5
-008E:  BSF    1F.0
-008F:  BSF    1F.1
-0090:  BSF    1F.2
-0091:  BCF    1F.3
-0092:  MOVLW  07
-0093:  MOVWF  1C
-0094:  BCF    03.7
+0096:  MOVF   03,W
+0097:  ANDLW  1F
+0098:  MOVWF  03
+0099:  MOVLW  81
+009A:  BSF    03.5
+009B:  MOVWF  19
+009C:  MOVLW  A6
+009D:  MOVWF  18
+009E:  MOVLW  90
+009F:  BCF    03.5
+00A0:  MOVWF  18
+00A1:  MOVLW  FF
+00A2:  MOVWF  20
+00A3:  BSF    03.5
+00A4:  BSF    1F.0
+00A5:  BSF    1F.1
+00A6:  BSF    1F.2
+00A7:  BCF    1F.3
+00A8:  MOVLW  07
+00A9:  MOVWF  1C
+00AA:  BCF    03.7
 ....................     
 ....................     char leer; 
 ....................     //char escribe; 
 ....................     set_tris_b(0b00000000);//configuracion pines puerto b como salida 
-0095:  MOVLW  00
-0096:  MOVWF  06
+00AB:  MOVLW  00
+00AC:  MOVWF  06
 ....................     output_b(0b00000000);//estado en bajo de todos los pines del puerto b 
-0097:  CLRF   06
-0098:  BCF    03.5
-0099:  CLRF   06
+00AD:  CLRF   06
+00AE:  BCF    03.5
+00AF:  CLRF   06
 ....................     output_high(pin_b7);//salida en alto para indicar que el pic ha iniciado 
-009A:  BSF    03.5
-009B:  BCF    06.7
-009C:  BCF    03.5
-009D:  BSF    06.7
+00B0:  BSF    03.5
+00B1:  BCF    06.7
+00B2:  BCF    03.5
+00B3:  BSF    06.7
 ....................     int i=0; 
-009E:  CLRF   22
+00B4:  CLRF   22
 ....................     
 ....................       while(true){   
 ....................        
 ....................       //checa si hay datos en bufer////////////// 
 ....................       if(kbhit()){ 
-009F:  BTFSS  0C.5
-00A0:  GOTO   0BF
+00B5:  BTFSS  0C.5
+00B6:  GOTO   0DA
+....................          output_toggle(pin_b1); 
+00B7:  BSF    03.5
+00B8:  BCF    06.1
+00B9:  MOVLW  02
+00BA:  BCF    03.5
+00BB:  XORWF  06,F
 ....................          leer=getc();//almacena datos en leer 
-00A1:  BTFSS  0C.5
-00A2:  GOTO   0A1
-00A3:  MOVF   1A,W
-00A4:  MOVWF  21
+00BC:  BTFSS  0C.5
+00BD:  GOTO   0BC
+00BE:  MOVF   1A,W
+00BF:  MOVWF  21
 ....................          if(leer=="OK"){ 
-00A5:  MOVLW  00
-00A6:  MOVWF  7A
-00A7:  MOVLW  04
-00A8:  SUBWF  21,W
-00A9:  BTFSS  03.2
-00AA:  GOTO   0B2
-00AB:  MOVF   7A,F
-00AC:  BTFSS  03.2
-00AD:  GOTO   0B2
+00C0:  MOVLW  00
+00C1:  MOVWF  7A
+00C2:  MOVLW  04
+00C3:  SUBWF  21,W
+00C4:  BTFSS  03.2
+00C5:  GOTO   0CD
+00C6:  MOVF   7A,F
+00C7:  BTFSS  03.2
+00C8:  GOTO   0CD
 ....................             output_high(pin_b0); 
-00AE:  BSF    03.5
-00AF:  BCF    06.0
-00B0:  BCF    03.5
-00B1:  BSF    06.0
+00C9:  BSF    03.5
+00CA:  BCF    06.0
+00CB:  BCF    03.5
+00CC:  BSF    06.0
 ....................          } 
 ....................          if(leer!="OK"){ 
-00B2:  MOVLW  00
-00B3:  MOVWF  7A
-00B4:  MOVLW  07
-00B5:  SUBWF  21,W
-00B6:  BTFSS  03.2
-00B7:  GOTO   0BB
-00B8:  MOVF   7A,F
-00B9:  BTFSC  03.2
-00BA:  GOTO   0BF
+00CD:  MOVLW  00
+00CE:  MOVWF  7A
+00CF:  MOVLW  07
+00D0:  SUBWF  21,W
+00D1:  BTFSS  03.2
+00D2:  GOTO   0D6
+00D3:  MOVF   7A,F
+00D4:  BTFSC  03.2
+00D5:  GOTO   0DA
 ....................             output_low(pin_b0); 
-00BB:  BSF    03.5
-00BC:  BCF    06.0
-00BD:  BCF    03.5
-00BE:  BCF    06.0
+00D6:  BSF    03.5
+00D7:  BCF    06.0
+00D8:  BCF    03.5
+00D9:  BCF    06.0
 ....................          } 
 ....................       }/////////////////////////////////////////// 
 ....................        
 ....................       //mandar un numero a arduino por serie 
 ....................       if(input(pin_b1)==1){ 
-00BF:  BSF    03.5
-00C0:  BSF    06.1
-00C1:  BCF    03.5
-00C2:  BTFSS  06.1
-00C3:  GOTO   129
+00DA:  BSF    03.5
+00DB:  BSF    06.1
+00DC:  BCF    03.5
+00DD:  BTFSS  06.1
+00DE:  GOTO   150
+....................          output_toggle(pin_b2); 
+00DF:  BSF    03.5
+00E0:  BCF    06.2
+00E1:  MOVLW  04
+00E2:  BCF    03.5
+00E3:  XORWF  06,F
 ....................          switch (i){ 
-00C4:  MOVF   22,W
-00C5:  BTFSC  03.2
-00C6:  GOTO   0D4
-00C7:  XORLW  01
-00C8:  BTFSC  03.2
-00C9:  GOTO   0E4
-00CA:  XORLW  03
-00CB:  BTFSC  03.2
-00CC:  GOTO   0F4
-00CD:  XORLW  01
-00CE:  BTFSC  03.2
-00CF:  GOTO   104
-00D0:  XORLW  07
-00D1:  BTFSC  03.2
-00D2:  GOTO   114
-00D3:  GOTO   124
-....................          case 0:puts("4661056410");break; 
-00D4:  MOVLW  0A
-00D5:  BSF    03.6
-00D6:  MOVWF  0D
-00D7:  MOVLW  00
-00D8:  MOVWF  0F
-00D9:  BCF    03.6
-00DA:  CALL   028
-00DB:  MOVLW  0D
-00DC:  BTFSS  0C.4
-00DD:  GOTO   0DC
-00DE:  MOVWF  19
-00DF:  MOVLW  0A
-00E0:  BTFSS  0C.4
-00E1:  GOTO   0E0
-00E2:  MOVWF  19
-00E3:  GOTO   124
-....................          case 1:puts("4571234565");break; 
-00E4:  MOVLW  10
-00E5:  BSF    03.6
-00E6:  MOVWF  0D
-00E7:  MOVLW  00
-00E8:  MOVWF  0F
-00E9:  BCF    03.6
-00EA:  CALL   028
-00EB:  MOVLW  0D
-00EC:  BTFSS  0C.4
-00ED:  GOTO   0EC
-00EE:  MOVWF  19
-00EF:  MOVLW  0A
-00F0:  BTFSS  0C.4
-00F1:  GOTO   0F0
-00F2:  MOVWF  19
-00F3:  GOTO   124
-....................          case 2:puts("4321082124");break; 
-00F4:  MOVLW  16
+00E4:  MOVF   22,W
+00E5:  BTFSC  03.2
+00E6:  GOTO   0F4
+00E7:  XORLW  01
+00E8:  BTFSC  03.2
+00E9:  GOTO   104
+00EA:  XORLW  03
+00EB:  BTFSC  03.2
+00EC:  GOTO   114
+00ED:  XORLW  01
+00EE:  BTFSC  03.2
+00EF:  GOTO   124
+00F0:  XORLW  07
+00F1:  BTFSC  03.2
+00F2:  GOTO   134
+00F3:  GOTO   144
+....................          case 0:puts("0123456789");break; 
+00F4:  MOVLW  0A
 00F5:  BSF    03.6
 00F6:  MOVWF  0D
 00F7:  MOVLW  00
@@ -319,9 +319,9 @@ CCS PCM C Compiler, Version 5.015, 5967               20-sep.-19 13:54
 0100:  BTFSS  0C.4
 0101:  GOTO   100
 0102:  MOVWF  19
-0103:  GOTO   124
-....................          case 3:puts("5554545714");break; 
-0104:  MOVLW  1C
+0103:  GOTO   144
+....................          case 1:puts("1111111111");break; 
+0104:  MOVLW  10
 0105:  BSF    03.6
 0106:  MOVWF  0D
 0107:  MOVLW  00
@@ -336,9 +336,9 @@ CCS PCM C Compiler, Version 5.015, 5967               20-sep.-19 13:54
 0110:  BTFSS  0C.4
 0111:  GOTO   110
 0112:  MOVWF  19
-0113:  GOTO   124
-....................          case 4:puts("6666645465");break; 
-0114:  MOVLW  22
+0113:  GOTO   144
+....................          case 2:puts("2222222222");break; 
+0114:  MOVLW  16
 0115:  BSF    03.6
 0116:  MOVWF  0D
 0117:  MOVLW  00
@@ -353,24 +353,65 @@ CCS PCM C Compiler, Version 5.015, 5967               20-sep.-19 13:54
 0120:  BTFSS  0C.4
 0121:  GOTO   120
 0122:  MOVWF  19
-0123:  GOTO   124
+0123:  GOTO   144
+....................          case 3:puts("3333333333");break; 
+0124:  MOVLW  1C
+0125:  BSF    03.6
+0126:  MOVWF  0D
+0127:  MOVLW  00
+0128:  MOVWF  0F
+0129:  BCF    03.6
+012A:  CALL   028
+012B:  MOVLW  0D
+012C:  BTFSS  0C.4
+012D:  GOTO   12C
+012E:  MOVWF  19
+012F:  MOVLW  0A
+0130:  BTFSS  0C.4
+0131:  GOTO   130
+0132:  MOVWF  19
+0133:  GOTO   144
+....................          case 4:puts("4444444444");break; 
+0134:  MOVLW  22
+0135:  BSF    03.6
+0136:  MOVWF  0D
+0137:  MOVLW  00
+0138:  MOVWF  0F
+0139:  BCF    03.6
+013A:  CALL   028
+013B:  MOVLW  0D
+013C:  BTFSS  0C.4
+013D:  GOTO   13C
+013E:  MOVWF  19
+013F:  MOVLW  0A
+0140:  BTFSS  0C.4
+0141:  GOTO   140
+0142:  MOVWF  19
+0143:  GOTO   144
 ....................          default:break; 
-....................          }i++; 
-0124:  INCF   22,F
+....................          }i++;delay_ms(1000); 
+0144:  INCF   22,F
+0145:  MOVLW  04
+0146:  MOVWF  23
+0147:  MOVLW  FA
+0148:  MOVWF  24
+0149:  GOTO   080
+014A:  DECFSZ 23,F
+014B:  GOTO   147
 ....................          if(i==5)i=0; 
-0125:  MOVF   22,W
-0126:  SUBLW  05
-0127:  BTFSC  03.2
-0128:  CLRF   22
+014C:  MOVF   22,W
+014D:  SUBLW  05
+014E:  BTFSC  03.2
+014F:  CLRF   22
 ....................       } 
-0129:  GOTO   09F
+0150:  GOTO   0B5
 ....................        
 ....................        
 ....................     
 ....................       }//fin ciclo principal 
 ....................    } 
 ....................  
-012A:  SLEEP
+0151:  SLEEP
 
 Configuration Fuses:
    Word  1: 3F7A   HS NOWDT NOPUT BROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT

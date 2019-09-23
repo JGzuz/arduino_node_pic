@@ -12,6 +12,7 @@
 022     main.i
 023     main.@SCRATCH1
 023     @PSTRINGC7_1.@SCRATCH1
+024     @delay_ms1.P1
 024     @PSTRINGC7_1.@SCRATCH2
 025     @PSTRINGC7_1.@SCRATCH3
 026     @PSTRINGC7_1.@SCRATCH4
@@ -34,18 +35,19 @@ ROM Allocation:
 00001C  @const636.call
 000022  @const637.call
 000028  @PSTRINGC7_1
-000080  main
-000080  @cinit1
-000094  @cinit2
+000080  @delay_ms1
+000096  main
+000096  @cinit1
+0000AA  @cinit2
 
 Project Directory:
     C:\Users\Morpheus\Desktop\ANP\codigo_pic\
 
 Project Files:
-    com_serial_pic.c                                        [20-sep.-19 13:54  CRC=D865FB80]
+    com_serial_pic.c                                        [23-sep.-19 10:38  CRC=DDC90A8F]
     ..\..\..\..\..\Program Files (x86)\PICC\Devices\16f877a.h [12-nov.-13 14:35  CRC=81334808]
 
-Source signature=DACC8B90
+Source signature=E02F9A9F
 
 Units:
     com_serial_pic (main)

@@ -1,8 +1,8 @@
-d G "INT_COMP" 1 668 "0x008D40"
-D G "__PCM__" 0 50 ""5.015""
-D G "__DEVICE__" 0 50 "877"
-D G "__DATE__" 0 50 ""20-sep.-19""
-D G "__TIME__" 0 50 ""13:54:26"" "Standard Header file for the PIC16F877A device ////////////////"
+C L "main" 0 13 1 "FUNCTION"
+D G "__PCM__" 0 52 ""5.015""
+D G "__DEVICE__" 0 52 "877"
+D G "__DATE__" 0 52 ""23-sep.-19""
+D G "__TIME__" 0 52 ""10:38:42"" "Standard Header file for the PIC16F877A device ////////////////"
 c L "set_tris_a" 1 3 6 "FUNCTION"
 v L "value" 1 37 "int8" `54 
 f B "set_tris_a" 1 37 "void(int8 value)" `53 

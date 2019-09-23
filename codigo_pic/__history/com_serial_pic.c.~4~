@@ -1,7 +1,7 @@
 #include <16f877a.h>//pic a utilizar
 #fuses hs, nowdt, noprotect, noput
 #use delay(clock=20M)//cristal
-#use rs232(baud=9600, rcv=pin_c7, xmit=pin_c6, bits=8, parity=N)//configuracion transmision en serie
+#use rs232(baud=115200, rcv=pin_c7, xmit=pin_c6, bits=8, parity=N)//configuracion transmision en serie
 #use standard_io(c)
 
    
@@ -31,15 +31,14 @@
       
       //mandar un numero a arduino por serie
       if(input(pin_b1)==1){
-         output_toggle(pin_b2);
          switch (i){
-         case 0:puts("0123456789");break;
-         case 1:puts("1111111111");break;
-         case 2:puts("2222222222");break;
-         case 3:puts("3333333333");break;
-         case 4:puts("4444444444");break;
+         case 0:puts("4661056410");break;
+         case 1:puts("4571234565");break;
+         case 2:puts("4321082124");break;
+         case 3:puts("5554545714");break;
+         case 4:puts("6666645465");break;
          default:break;
-         }i++;delay_ms(1000);
+         }i++;
          if(i==5)i=0;
       }
       

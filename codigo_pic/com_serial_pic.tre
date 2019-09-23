@@ -1,8 +1,9 @@
 юдcom_serial_pic
-   юдmain  0/171  Ram=2
+   юдmain  0/188  Ram=2
       цд@cinit1  (Inline)  Ram=0
       цд@PSTRINGC7_1  0/88  Ram=4
       цд@PSTRINGC7_1  0/88  Ram=4
       цд@PSTRINGC7_1  0/88  Ram=4
       цд@PSTRINGC7_1  0/88  Ram=4
-      юд@PSTRINGC7_1  0/88  Ram=4
+      цд@PSTRINGC7_1  0/88  Ram=4
+      юд@delay_ms1  0/22  Ram=1

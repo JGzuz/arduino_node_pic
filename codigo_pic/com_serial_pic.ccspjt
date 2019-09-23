@@ -11,9 +11,9 @@ Include=C:\Program Files (x86)\PICC\Devices\;C:\Program Files (x86)\PICC\Drivers
 Type=4
 [mru-list]
 1=com_serial_pic.c
-[Units]
-Count=1
-1=com_serial_pic (main)
 [Opened Files]
 1=com_serial_pic.c
 2=
+[Units]
+Count=1
+1=com_serial_pic (main)
