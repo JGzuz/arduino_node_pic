@@ -35,4 +35,56 @@ en proceso..
 1: comunicar arduino con node, para esto necesitamos hacer un skech en arduino y un proyecto en node
 
 2: comunicar arduino con pic, como ya se esta comunicando nuestro arduino con la pc, tenemos
-que hacer un puerto virtual para podernos comunir con arduino, 
+que hacer un puerto virtual para podernos comunir con arduino, --------------------
+-------------------------------------------------------------------------------------
+const zuz = {
+    nombre: "Jesus",
+    apellido: "Gomez",
+    altura: 1.82
+}
+
+const vector = {
+    nombre: "Victor",
+    apellido: "Ayala",
+    altura: 1.70
+}
+
+const lulu = {
+    nombre: "Lulu",
+    apellido: "Armin",
+    altura: 1.69
+}
+
+const esAlta = (persona) => {
+    return persona.altura > 1.8
+}
+
+function alta2(persona) {
+    if((persona.altura == 1.69) && (persona.nombre == "Lulu")){
+        return true
+    }
+}
+
+const personas = [zuz, vector, lulu]
+
+var personasAltas = personas.filter(esAlta)
+console.log(personasAltas)
+
+var personaUnica = personas.filter(alta2)
+if(personaUnica){console.log("Se detecto una persona con esas caraxteristicas")}
+console.log(personaUnica)
+
+--------------------------------------------------------------------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LAprueba</title>
+</head>
+<body>
+    <script src="index.js"></script>
+</body>
+</html>
