@@ -17,13 +17,20 @@ https://serialport.io/docs/guide-usage //script de serialport
 
 2: comunicar arduino con pic
    Status: conecion de circuto pic: OK
-   puerto virtual arduino: hecho..en revision
+   puerto virtual arduino:          OK
 
 3: enviar datos de pic a arduino y de arduino a node para que los analize
+                                                             OK
+3.5: Simulacion de modulo sim800L con arduino: OK                                                             
 
 4: una vez enviados los datos en node, procesarlos, enviar una respuesta a arduino y de arduino a pic
+en proceso..
 
 5: en base a la respuesta encender o apagar un led
+
+6: verificar que el puerto virtual trabaje adecuadamente.
+
+7: remplazar modulo sim800
 
 1: comunicar arduino con node, para esto necesitamos hacer un skech en arduino y un proyecto en node
 
