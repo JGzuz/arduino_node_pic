@@ -5,10 +5,10 @@ SoftwareSerial serieNode(8,9);//configuracion puerto serie virtual (RX, TX)
 void setup() {
   Serial.begin(115200);while(!Serial){;}//configuracion velocidad de transmision
   //arduino-pc, espera hasta que la comunicacion se haya establecido
-  Serial.println("Comunicacion arduino-pc establecida");
+  //Serial.println("Comunicacion arduino-pc establecida");
 
   serieNode.begin(115200);//velocidad de transmison puerto virtual serie
-  serieNode.println("Puerto virtual inicializado");
+  //serieNode.println("Puerto virtual inicializado");
   
 }
 

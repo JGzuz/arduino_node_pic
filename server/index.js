@@ -2,32 +2,37 @@ const SerialPort = require("serialport")//importar modulo para comunicacion seri
 const mySerial = new SerialPort("COM18", {baudRate: 115200})//configuracion puerto y velocidad de transmision
 
 //declaracion de varaibles
-let numArduino, numeroApto;
+var numArduino, numeroApto;
 
 //evento comunicacion serial arbierta
 mySerial.on("open", function() {
-    console.log("COMUNICACION SERIAL ABIERTA")
+    console.log("COMUNICACION SERIAL ABIERTA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>OK")
+    
 })
 
 //funcion para verificar si el numero esta en la base de datos y esta activo
 function verificaNumero(cliente) {
-    if((cliente.numero == numArduino) && (cliente.activo == true)){
+    //console.log("------------------------------------------------------------------")
+    //console.log(`Comarando el número ${numArduino}con:`)
+    //console.log(`Número actual: ${cliente.numero}, estado: ${cliente.activo}`)
+    if(cliente.numero === parseInt(numArduino)){
         console.log(`${cliente.numero} == ${numArduino}`)
+        console.log(`El numero ${numArduino}se ha recargado exitosamente`)
         return true
     }
+    
+    //console.log("------------------------------------------------------------------")
+
 }
 
 //escucha datos en buffer
 mySerial.on("data", function (data) {
+    console.log(`Nuevo dato recibido: ${data.toString()}`)
     numArduino = data.toString()
-    console.log(numArduino)
+    console.log(`Iniciando comparativa de: ${numArduino}`)
     numeroApto = clientes.filter(verificaNumero)
-    if(numeroApto){
-        //console.log(`El numero ${numArduino} se ha recargado exitosamente`)
-    }
-    else{
-       // console.log(`El numero ${numArduino} no se encuentra en la base de datos, o esta inactivo`)
-    }
+    //if(numeroApto != true){console.log("No hay recarga prro")}
+    console.log("--------------------------------------")
 })
 
 //evento de error
@@ -40,7 +45,7 @@ mySerial.on("err", function(err) {
 //basesita de datos falsos uwuwuwuw
 var cliente1 = {
     nombre: "Juan",
-    numero: "4661023845",
+    numero: 4661023845,
     id: "00000asdf1",
     activo: true,
     edad: 22
@@ -48,15 +53,15 @@ var cliente1 = {
 
 const cliente2 = {
     nombre: "Petra",
-    numero: "0123456789",
     id: "00000asdf1",
     activo: true,
-    edad: 32
+    edad: 32,
+    numero: 1334512345
 }
 
 const cliente3 = {
     nombre: "Luisa",
-    numero: "1111111111",
+    numero: 1111111111,
     id: "00000asdf1",
     activo: true,
     edad: 28
@@ -64,7 +69,7 @@ const cliente3 = {
 
 const cliente4 = {
     nombre: "Brayan",
-    numero: "2222222222",
+    numero: 2222222222,
     id: "00000asdf1",
     activo: true,
     edad: 59
@@ -72,7 +77,7 @@ const cliente4 = {
 
 const cliente5 = {
     nombre: "Steve",
-    numero: "3333333333",
+    numero: 3333333333,
     id: "00000asdf1",
     activo: true,
     edad: 30
