@@ -11,13 +11,13 @@ void setup() {
 void loop() {
   if((digitalRead(pushBoton1))==1){
       switch(x){
-        case 0: serie_sim.println("0123456789");break;
+        case 0: serie_sim.println("012345678912445236521245215254125412542");break;
         case 1: serie_sim.println("1111111111");break;
         case 2: serie_sim.println("2222222222");break;
         case 3: serie_sim.println("3333333333");break;
         case 4: serie_sim.println("4444444444");break;
           
-      }x++; delay(1000);if(x==4){x=0;}
+      }x++; delay(1000);if(x==5){x=0;}
     }
 
 }

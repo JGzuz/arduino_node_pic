@@ -27,12 +27,19 @@ function verificaNumero(cliente) {
 
 //escucha datos en buffer
 mySerial.on("data", function (data) {
+    console.log("<<<<<<-------------------------------------")
     console.log(`Nuevo dato recibido: ${data.toString()}`)
     numArduino = data.toString()
     console.log(`Iniciando comparativa de: ${numArduino}`)
-    numeroApto = clientes.filter(verificaNumero)
+
+    setTimeout(() => {
+        numeroApto = clientes.filter(verificaNumero)
+    }, 800)
+    
+
     //if(numeroApto != true){console.log("No hay recarga prro")}
-    console.log("--------------------------------------")
+    
+    console.log("-------------------------------------->>>>>")
 })
 
 //evento de error
