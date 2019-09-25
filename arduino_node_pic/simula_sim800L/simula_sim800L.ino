@@ -20,8 +20,16 @@ void loop() {
         case 2: serie_sim.println("1000000002");break;
         case 3: serie_sim.println("1000000003");break;
         case 4: serie_sim.println("1000000004");break;
-          
-      }x++; delay(1000);if(x==5){x=0;}
+        case 5: serie_sim.println("1000000005");break;
+        case 6: serie_sim.println("1000000006");break;
+        case 7: serie_sim.println("1000000007");break;
+        case 8: serie_sim.println("1000000008");break;
+        case 9: serie_sim.println("1000000009");break;
+        case 10: serie_sim.println("1000000010");break;
+        case 11: serie_sim.println("1000000011");break;
+        case 12: serie_sim.println("1000000012");break;
+        default: break;
+      }x++; delay(1000);if(x==12){x=0;}
    }
 
    //para enviar una serie de datos consecutivos

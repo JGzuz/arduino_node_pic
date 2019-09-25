@@ -4,6 +4,7 @@ const mySerial = new SerialPort("COM18", {baudRate: 115200})//configuracion puer
 //declaracion de varaibles
 let numArduino, numeroApto;
 let parteAnterior;
+let sub_bufer;
 
 //evento comunicacion serial arbierta
 mySerial.on("open", function() {
@@ -16,8 +17,9 @@ function verificaNumero(cliente) {
     //console.log(`Comarando el número ${numArduino}con:`)
     //console.log(`Número actual: ${cliente.numero}, estado: ${cliente.activo}`)
     if(cliente.numero === parseInt(numArduino)){
-        console.log(`${cliente.numero} == ${numArduino}`)
+        console.log(`Se encontro una coincidencia: ${cliente.numero} == ${numArduino}`)
         console.log(`El numero ${numArduino}se ha recargado exitosamente`)
+        console.log("------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         return true
     }
     
@@ -27,26 +29,34 @@ function verificaNumero(cliente) {
 
 //escucha datos en buffer
 mySerial.on("data", function (data) {
-    console.log("<<<<<<-------------------------------------")
+    console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<----------------")
     console.log(`Nuevo dato recibido: ${data.toString()}`)
+    console.log(`Buffer: ${parteAnterior}`)
     numArduino = data.toString()
     console.log(`Iniciando comparativa de: ${numArduino}`)
 
-    //verificar el tamaño del numero
-    console.log(`Tamalo de cadena: ${numArduino.length}`)
-    if(numArduino.length < 12){
-        numArduino = parteAnterior + numArduino
-        console.log(`nueva cadena: ${numArduino}`)
+    //verifica si tenemos una parte de un numero anterior, y la concatena con la siguinte lectura
+    if((numArduino.length < 12) && (sub_bufer === 1)){
+        numArduino = parteAnterior + data.toString()
+        console.log(`Nuevo numero concatenado: ${numArduino}`)
+        sub_bufer = 0
+        parteAnterior = "undefined"
     }
 
-    setTimeout(() => {
-        numeroApto = clientes.filter(verificaNumero)
-    }, 800)
+    //verificar el tamaño del numero
+    console.log(`Tamaño de cadena: ${numArduino.length}`)
+    if(numArduino.length < 12){
+        parteAnterior = numArduino
+        sub_bufer = 1
+        //console.log(`nueva cadena: ${numArduino}`)
+    }
+
+    //si el dato leido por el puerto serie contiene 10 digitos
+    if(numArduino.length === 12){
+            numeroApto = clientes.filter(verificaNumero)
+    }
     
 
-    //if(numeroApto != true){console.log("No hay recarga prro")}
-    
-    console.log("-------------------------------------->>>>>")
 })
 
 //evento de error
