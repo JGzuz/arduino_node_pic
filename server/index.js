@@ -11,20 +11,14 @@ mySerial.on("open", function() {
     console.log("COMUNICACION SERIAL ABIERTA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK")
 })
 
-//funcion para verificar si el numero esta en la base de datos y esta activo
+//funcion para verificar si el numero esta en la base de datos
 function verificaNumero(cliente) {
-    //console.log("------------------------------------------------------------------")
-    //console.log(`Comarando el número ${numArduino}con:`)
-    //console.log(`Número actual: ${cliente.numero}, estado: ${cliente.activo}`)
     if(cliente.numero === parseInt(numArduino)){
         console.log(`Se encontro una coincidencia: ${cliente.numero} == ${numArduino}`)
         console.log(`El numero ${numArduino}se ha recargado exitosamente`)
         console.log("------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         return true
     }
-    
-    //console.log("------------------------------------------------------------------")
-
 }
 
 //escucha datos en buffer
@@ -55,8 +49,6 @@ mySerial.on("data", function (data) {
     if(numArduino.length === 12){
             numeroApto = clientes.filter(verificaNumero)
     }
-    
-
 })
 
 //evento de error
