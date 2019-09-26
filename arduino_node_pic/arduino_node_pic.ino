@@ -11,9 +11,12 @@ void setup() {
 
   serieNode.begin(115200);//velocidad de transmison puerto virtual serie
   //serieNode.println("Puerto virtual inicializado");
-
+  delay(800);
   pinMode(push12, INPUT);
   pinMode(led11, OUTPUT);
+
+  serieNode.println("4661016969");
+  
 }
 
 void loop() {
@@ -25,15 +28,13 @@ void loop() {
     }
 
   //escucha puerto serial
-  if(Serial.available()){
-      serieNode.print("hola");
-      node=((char)Serial.read());
+  if(Serial.available()>0){
+      //delay(2000);
+      serieNode.print("4014");
+      node=((String)Serial.read());
       serieNode.print(node);
-      
-      
       if(node == "LED_ON"){digitalWrite(led11, HIGH);}
       if(node == "LED_OFF"){digitalWrite(led11, HIGH);}  
-      
     }
     
   if(digitalRead(push12) == 1){
