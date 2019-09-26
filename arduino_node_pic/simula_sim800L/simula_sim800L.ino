@@ -5,7 +5,9 @@ int pushBoton1 = 12;//variable aux para usar pin 12 como entrada
 int pushBoton2 = 11;//push boton en pin 11
 
 void setup() {
+  Serial.begin(115200);while(!Serial){;}
   serie_sim.begin(115200);
+  
   pinMode(pushBoton1, INPUT); //configura pin 12 como entrada
   pinMode(pushBoton2, INPUT); //configura pin 11 como entrada
 }
@@ -49,5 +51,12 @@ void loop() {
       serie_sim.println("1000000012");delay(100);
       serie_sim.println("1000000013");delay(100);
     }
+
+    //datos de retor de arduino de node
+
+    if(serie_sim.available()){
+        Serial.print((char)serie_sim.read());
+      }
+      
 
 }

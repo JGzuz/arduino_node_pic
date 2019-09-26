@@ -3,7 +3,7 @@ SoftwareSerial serieNode(8,9);//configuracion puerto serie virtual (RX, TX)
 
 int push12 = 12;
 int led11 = 11;
-int node;
+String node;
 void setup() {
   Serial.begin(115200);while(!Serial){;}//configuracion velocidad de transmision
   //arduino-pc, espera hasta que la comunicacion se haya establecido
@@ -24,12 +24,17 @@ void loop() {
       
     }
 
-  /*//escucha puerto serial
+  //escucha puerto serial
   if(Serial.available()){
-      node=Serial.read();
-      Serial.print(node);   
-      Serial.println("05214");
-    }*/
+      serieNode.print("hola");
+      node=((char)Serial.read());
+      serieNode.print(node);
+      
+      
+      if(node == "LED_ON"){digitalWrite(led11, HIGH);}
+      if(node == "LED_OFF"){digitalWrite(led11, HIGH);}  
+      
+    }
     
   if(digitalRead(push12) == 1){
       delay(200);
