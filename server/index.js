@@ -1,7 +1,7 @@
 const SerialPort = require("serialport")//importar modulo para comunicacion serial
 const Readline = SerialPort.parsers.Readline
 const parser = new Readline()
-const mySerial = new SerialPort("COM18", {baudRate: 115200})//configuracion puerto y velocidad de transmision
+const mySerial = new SerialPort("COM17", {baudRate: 115200})//configuracion puerto y velocidad de transmision
 
 //declaracion de varaibles
 let numArduino, numeroApto;
@@ -10,21 +10,19 @@ let sub_bufer;
 
 //mandar datos a arduino
 function enviaDato() {
-    mySerial.write("LED_ON")
-    mySerial.write(Buffer.from("LED_ON"))
+    //mySerial.write("O")
+    mySerial.write(Buffer.from("CARtucho"))
     console.log("led encendido...")
-    setTimeout(() => {
-        mySerial.write('5')
-        mySerial.write(Buffer.from('2'))
-        console.log("led apagado...")
-    },2000)
+    
 }
 
 //evento comunicacion serial arbierta
 mySerial.on("open", function() {
     console.log("COMUNICACION SERIAL ABIERTA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK")
-    enviaDato();
+    
 })
+
+
 
 //funcion para verificar si el numero esta en la base de datos
 function verificaNumero(cliente) {
@@ -32,6 +30,7 @@ function verificaNumero(cliente) {
         console.log(`Se encontro una coincidencia: ${cliente.numero} == ${numArduino}`)
         console.log(`El numero ${numArduino}se ha recargado exitosamente`)
         console.log("------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+        enviaDato();
         return true
     }
 }
