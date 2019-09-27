@@ -39,11 +39,13 @@ void loop() {
    //datos de node a arduino mega:
    if(Serial.available()){//si hay datos en el buffer del serial
       node=(char)Serial.read();
-      if(node = "CARRO"){
+      if(node == "F"){
         digitalWrite(led_bufferPc, HIGH);
         }
-      
-      Serial1.println(node);//lee lo proviniente del puero Serial y la manda por el puerto Serial1
+      Serial1.print(node);
+      //Serial.print("otra");
+      //Serial.print("Vaca");
+      //Serial1.println(node);//lee lo proviniente del puero Serial y la manda por el puerto Serial1
     }
 
 }

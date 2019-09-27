@@ -11,7 +11,7 @@ let sub_bufer;
 //mandar datos a arduino
 function enviaDato() {
     //mySerial.write("O")
-    mySerial.write(Buffer.from("CARtucho"))
+    mySerial.write(Buffer.from("F"))
     console.log("led encendido...")
     
 }
