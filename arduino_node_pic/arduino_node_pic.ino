@@ -1,40 +1,41 @@
 #include <SoftwareSerial.h>//libreria para implementar mas de un puerto serial
-SoftwareSerial serieNode(8,9);//configuracion puerto serie virtual (RX, TX)
+SoftwareSerial serieSim800(8,9);//configuracion puerto serie virtual (RX, TX)
 
 int push12 = 12;
 int led11 = 11;
-String node;
+String nodeDice;
 void setup() {
-  Serial.begin(115200);while(!Serial){;}//configuracion velocidad de transmision
+  
   //arduino-pc, espera hasta que la comunicacion se haya establecido
-  //Serial.println("Comunicacion arduino-pc establecida");
+  Serial.begin(115200);while(!Serial){;}//configuracion velocidad de transmision
 
-  serieNode.begin(115200);//velocidad de transmison puerto virtual serie
-  //serieNode.println("Puerto virtual inicializado");
+  //serieSim800.println("Puerto virtual inicializado");
+  serieSim800.begin(115200);//velocidad de transmison puerto virtual serie
+  
   delay(800);
   pinMode(push12, INPUT);
   pinMode(led11, OUTPUT);
-
-  serieNode.println("4661016969");
   
 }
 
 void loop() {
 
   //escucha datos en puerto serial virtual
-  if(serieNode.available()>0){
-      Serial.print((char)serieNode.read());
-      
+  if(serieSim800.available()>0){
+      Serial.print((char)serieSim800.read());
     }
 
   //escucha puerto serial
+  
   if(Serial.available()>0){
-      //delay(2000);
-      serieNode.print("4014");
-      node=((String)Serial.read());
-      serieNode.print(node);
-      if(node == "LED_ON"){digitalWrite(led11, HIGH);}
-      if(node == "LED_OFF"){digitalWrite(led11, HIGH);}  
+      nodeDice=(char)Serial.read();
+      serieSim800.print(nodeDice);
+      if(nodeDice == "ON"){
+          digitalWrite(led11, HIGH);
+        }  
+      if(nodeDice == "OFF"){
+          digitalWrite(led11, LOW);
+        }
     }
     
   if(digitalRead(push12) == 1){

@@ -1,7 +1,7 @@
 const SerialPort = require("serialport")//importar modulo para comunicacion serial
 const Readline = SerialPort.parsers.Readline
 const parser = new Readline()
-const mySerial = new SerialPort("COM17", {baudRate: 115200})//configuracion puerto y velocidad de transmision
+const mySerial = new SerialPort("COM18", {baudRate: 115200})//configuracion puerto y velocidad de transmision
 
 //declaracion de varaibles
 let numArduino, numeroApto;
@@ -11,7 +11,7 @@ let sub_bufer;
 //mandar datos a arduino
 function enviaDato() {
     //mySerial.write("O")
-    mySerial.write(Buffer.from("F"))
+    mySerial.write(Buffer.from("ON"))
     console.log("led encendido...")
     
 }
