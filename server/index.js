@@ -10,8 +10,8 @@ let sub_bufer;
 
 //mandar datos a arduino
 function enviaDato() {
-    //mySerial.write("O")
-    mySerial.write(Buffer.from("ON"))
+    mySerial.write('gato')
+    mySerial.write(Buffer.from('OR'))
     console.log("led encendido...")
     
 }
@@ -62,7 +62,6 @@ mySerial.on("data", function (data) {
     //si el dato leido por el puerto serie contiene 10 digitos
     if(numArduino.length === 12){
             numeroApto = clientes.filter(verificaNumero)
-            
     }
 })
 
