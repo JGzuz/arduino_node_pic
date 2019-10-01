@@ -10,8 +10,8 @@ let sub_bufer;
 
 //mandar datos a arduino
 function enviaDato() {
-    mySerial.write('gato')
-    mySerial.write(Buffer.from('OR'))
+    mySerial.write('H')
+    //mySerial.write(Buffer.from('H'))
     console.log("led encendido...")
     
 }
@@ -30,7 +30,7 @@ function verificaNumero(cliente) {
         console.log(`Se encontro una coincidencia: ${cliente.numero} == ${numArduino}`)
         console.log(`El numero ${numArduino}se ha recargado exitosamente`)
         console.log("------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-        enviaDato();
+        
         return true
     }
 }
@@ -62,6 +62,7 @@ mySerial.on("data", function (data) {
     //si el dato leido por el puerto serie contiene 10 digitos
     if(numArduino.length === 12){
             numeroApto = clientes.filter(verificaNumero)
+            enviaDato();
     }
 })
 

@@ -4,7 +4,7 @@ SoftwareSerial serieSim800(8,9);//configuracion puerto serie virtual (RX, TX)
 int push12 = 12;
 int led11 = 11;
 int pb_verificar = 7;//
-String nodeDice = "Undefined";
+char nodeDice = "Undefined";
 void setup() {
   
   //arduino-pc, espera hasta que la comunicacion se haya establecido
@@ -16,7 +16,7 @@ void setup() {
   delay(800);
   pinMode(push12, INPUT);
   pinMode(led11, OUTPUT);
-  pinMode(pb_verificar, 7);//boton para verificar que le manda node a arduino
+  pinMode(pb_verificar, OUTPUT);//boton para verificar que le manda node a arduino
   
 }
 
@@ -29,11 +29,13 @@ void loop() {
 
   //escucha puerto serial
   if(Serial.available()){
-      
+      delay(100);
+      serieSim800.write((char)Serial.read());
     }
 
   //imprime lo que envio node
   if((digitalRead(pb_verificar)) == 1){
+      Serial.println(nodeDice);
       
     }
     

@@ -69,7 +69,7 @@ void loop() {
 
     //leer datos del arduino conectado a node
     if(serieNodeDice.available()){
-        
+        Serial.println((char)serieNodeDice.read());
       }
       
 
