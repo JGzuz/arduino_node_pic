@@ -10,7 +10,7 @@ let sub_bufer;
 
 //mandar datos a arduino
 function enviaDato() {
-    mySerial.write('H')
+    mySerial.write('A')
     //mySerial.write(Buffer.from('H'))
     console.log("led encendido...")
     

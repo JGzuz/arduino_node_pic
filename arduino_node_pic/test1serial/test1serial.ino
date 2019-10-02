@@ -20,7 +20,6 @@ void setup() {
   digitalWrite(led, LOW);
 
   /////////////////////
-  
 }
 
 
@@ -28,7 +27,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
-        if(acumula == "o"){
+        if(acumula == "A"){
             digitalWrite(led, LOW);
             Serial.print("activado: = ");
             Serial.println(acumula);
@@ -56,7 +55,7 @@ void loop() {
         
   
   if(Serial.available()>0){
-      /*ENVIAR UN CARACTER A LA VEZ 
+      //ENVIAR UN CARACTER A LA VEZ 
       char dato=(char)Serial.read();//almacenamos el dato del buffer seria, un byte por vez
       Serial.print(dato);
       box = dato;
@@ -66,12 +65,10 @@ void loop() {
         }
       if(dato == 66){
           digitalWrite(led, LOW);
-      }*/
+      }
 
-      //ALMACENAR UNA CADENA EN UN CHAR
-
+      /*ALMACENAR UNA CADENA EN UN CHAR y borrar 
       memset(cadena, 0, sizeof(cadena));//borra la cadena desde 0 hasta tamaño de cadena
-
       while(Serial.available()>0){
           delay(5);
           cadena[posicion] = (char)Serial.read();
@@ -92,7 +89,7 @@ void loop() {
       Serial.println("rewrite");
       acumula=cadena;
       Serial.print(acumula);
-      posicion=0;
+      posicion=0;*/
       
     }//fin de leectura de datos del puerto serie
 }
