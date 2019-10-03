@@ -1,7 +1,7 @@
 const SerialPort = require("serialport")//importar modulo para comunicacion serial
 const Readline = SerialPort.parsers.Readline
 const parser = new Readline()
-const mySerial = new SerialPort("COM18", {baudRate: 115200})//configuracion puerto y velocidad de transmision
+const mySerial = new SerialPort("COM3", {baudRate: 115200})//configuracion puerto y velocidad de transmision
 
 //declaracion de varaibles
 let numArduino, numeroApto;
@@ -16,10 +16,16 @@ function enviaDato() {
     
 }
 
+function cadenas() {
+    setTimeout(() => {
+        mySerial.write('A') 
+    },5000)
+}
+
 //evento comunicacion serial arbierta
 mySerial.on("open", function() {
     console.log("COMUNICACION SERIAL ABIERTA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK")
-    
+    cadenas();
 })
 
 
