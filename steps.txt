@@ -7,6 +7,7 @@ zuz to zuz
 --------------------------
 https://serialport.io/docs/guide-usage //script de serialport
 http://diymakers.es/usando-el-puerto-serie-del-arduino/ //comunicacion arduino
+https://www.luisllamas.es/cadenas-de-texto-puerto-serie-arduino/ mas de arduino serie
 https://www.youtube.com/watch?v=8fEoWA9Vz3A
 https://www.youtube.com/watch?v=9t8ZyUaaV9o
 
