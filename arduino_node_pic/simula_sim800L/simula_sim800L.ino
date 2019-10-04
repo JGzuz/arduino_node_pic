@@ -70,10 +70,11 @@ void loop() {
     //leer datos del arduino conectado a node
     if(serieNodeDice.available()){
         
-        char dato = (char)serieNodeDice.read();delay(5);
+         char dato = (char)serieNodeDice.read();delay(5);
         
         //char dato2 = (char)serieNodeDice.read();
         Serial.print(dato);
+        
         //Serial.println(dato2);
         
       }

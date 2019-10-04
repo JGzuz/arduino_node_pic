@@ -1,0 +1,115 @@
+#include<SoftwareSerial.h>
+SoftwareSerial nodeSerial(8,9);//(rx, tx)
+
+String datoA = "COCA";
+String datoB = "PERRO";
+String datoS;
+String arre;
+
+const int led11 = 11;
+const int led6 = 6;
+
+char subbuf[30];
+char aux1 = 'A';
+String aux2 = "AT_";
+
+int push12 = 12;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(push12, INPUT);
+  
+  Serial.begin(115200);
+  nodeSerial.begin(115200);/*
+  Serial.println("Comunicacion serial inicializada");
+  Serial.println(81);//imprimir en decimal en pc
+  nodeSerial.println(81);
+  Serial.println(81,DEC);//imprime en formato decimal al puerto serial
+  nodeSerial.println(81,DEC);
+  Serial.println(81,OCT);//formato octal
+  nodeSerial.println(81,OCT);
+  Serial.println(81,BIN);//formato binario
+  nodeSerial.println(81,BIN);
+  Serial.write(81);//envia el valor como byte, 81 en ascii es igual a 81
+  nodeSerial.write(81);
+  Serial.println();
+  datoS = datoA + datoB;
+  nodeSerial.print(65);
+  nodeSerial.print("A");*/
+  Serial.print("COMUNICACION INICIALIZXADA");
+  delay(200);
+  nodeSerial.print(1);
+  nodeSerial.print("1A2B3C4D5F");
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+  
+  
+  if(Serial.available()>0){
+      char dato=(char)Serial.read();
+      //nodeSerial.print(dato);
+      Serial.print(dato);
+      aux2 = aux2 + dato;
+    }
+  if(datoS == "COCAPERRO"){
+      Serial.println("Si se puede sumar cadenas");
+      datoS = "x";
+    }
+  
+  if((digitalRead(push12)) == 1){
+      while((digitalRead(push12)) == HIGH){;}
+      //Serial.print(aux1);
+      Serial.print(aux2);
+    }
+
+
+  if(aux2 == "AT_led11"){
+      
+      digitalWrite(led11, HIGH);
+      digitalWrite(led6, LOW);
+      nodeSerial.print("hay te va esto");
+      nodeSerial.print(aux2);
+      aux2 = "AT_";
+      Serial.flush();
+      delay(2000);
+    }
+
+  if(aux2 == "AT_led6"){
+      digitalWrite(led11, LOW);
+      digitalWrite(led6, HIGH);
+      nodeSerial.print("hay te va esto");
+      nodeSerial.print(aux2);
+      aux2 = "AT_";
+      Serial.flush();
+      delay(2000);
+    }  
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+const int led11 = 11;
+char megaDato;
+
+void setup() {
+    Serial.begin(115200);
+    delay(50);
+    pinMode(led11, OUTPUT);
+  } 
+
+void loop() {
+    if(Serial.available()){
+        char data = Serial.read();
+        megaDato = data;
+        Serial.print(data);
+      }
+
+    if(megaDato=='A'){digitalWrite(led11, HIGH);}
+    else if (megaDato=='B') digitalWrite(led11, LOW);
+      
+  }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
