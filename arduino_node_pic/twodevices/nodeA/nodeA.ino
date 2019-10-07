@@ -28,7 +28,7 @@ void loop() {
         megaDato = data;
         datoNumerico = String(megaDato).toInt();
         //Serial.print(data);
-        Serial.print(megaDato);
+        //Serial.print(megaDato);
       }
       
     //cuando reciba datos por el puerto serie virtual del sim800L (simulado con otro arduino)
@@ -41,7 +41,7 @@ void loop() {
       digitalWrite(led6, LOW);
       Serial_sim.print("1000");
       //Serial_sim.print(megaDato);
-      Serial_sim.print("");
+      //Serial_sim.print("");
       megaDato = "";
       }
 
@@ -50,7 +50,7 @@ void loop() {
       digitalWrite(led11, LOW);
       Serial_sim.print("1001");
       //Serial_sim.print(megaDato);
-      Serial_sim.print("");
+      //Serial_sim.print("");
       megaDato = "";
       }
 
