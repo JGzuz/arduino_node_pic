@@ -1,7 +1,7 @@
-#include <SoftwareSerial.h>
-SoftwareSerial Serial_sim(8,9);
+#include <SoftwareSerial.h>//Libreria para implementar mas de un puerto
+SoftwareSerial Serial_sim(8,9);//configuracion puerto serie virtual (rx, tx)
 
-const int led11 = 11;
+const int led11 = 11;//Indicador que llego determinada cadena por 
 const int led6 = 6;
 const int push12 = 12;
 const int push5 = 5;
@@ -21,12 +21,19 @@ void setup() {
   } 
 
 void loop() {
+
+  //cuando reciba datos del puerto Serial hardware de la pc
     if(Serial.available()){
         String data = (String)Serial.readStringUntil('\n');
         megaDato = data;
         datoNumerico = String(megaDato).toInt();
         //Serial.print(data);
         Serial.print(megaDato);
+      }
+      
+    //cuando reciba datos por el puerto serie virtual del sim800L (simulado con otro arduino)
+    if(Serial_sim.available()){
+        Serial.print((char)Serial_sim.read());
       }
 
     if(megaDato == "ATC_SEND"){
@@ -47,30 +54,20 @@ void loop() {
       megaDato = "";
       }
 
+    if(megaDato == "MSN_ENVIADO"){
+        Serial_sim.print("1002");
+        megaDato = "";
+      }
+
+    
     if(digitalRead(push5)==1){
         while(digitalRead(push5)==1){;}
-        //Serial.print(megaDato);
-        Serial_sim.print('A');
-        //Serial_sim.print('ABC');
-        //Serial_sim.print("dfg");
+        Serial.print("string do not problem");
       }
 
     if(digitalRead(push12)==1){
         while(digitalRead(push12)==1){;}
-        Serial.print(datoNumerico);
+        Serial.print(megaDato);
       }
 
-    //CONVERTIR CADENA A CHAR PARA ENVIAR
-      
-     /*switch (datoNumerico) {
-      case 1001: Serial_sim.print("CAYO"); break;
-      case 1002: break;
-      case 1003: break;
-      case 1004: break;
-      case 1005: break;
-      case 1006: break;
-      case 1007: break;
-      default: break; 
-      }*/
-      
   }

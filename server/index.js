@@ -26,6 +26,12 @@ function cadenas() {
     },8000)
 }
 
+function enviaMsn() {
+    setTimeout(()=>{
+        mySerial.write('MSN_ENVIADO')
+    }, 2000)
+}
+
 //evento comunicacion serial arbierta
 mySerial.on("open", function() {
     console.log("COMUNICACION SERIAL ABIERTA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK")
@@ -40,7 +46,7 @@ function verificaNumero(cliente) {
         console.log(`Se encontro una coincidencia: ${cliente.numero} == ${numArduino}`)
         console.log(`El numero ${numArduino}se ha recargado exitosamente`)
         console.log("------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-        
+        enviaMsn();
         return true
     }
 }
