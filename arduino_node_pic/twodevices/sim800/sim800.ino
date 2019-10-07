@@ -9,7 +9,7 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
   Serial_sim.begin(115200);
-  Serial.print("COMUNICACION ARD-PC, ARD-SIM INICIALIZADAS");
+  Serial.println("COMUNICACION ARD-PC, ARD-SIM INICIALIZADAS");
   pinMode(led10, OUTPUT);
   pinMode(led6, OUTPUT);
 }
@@ -21,13 +21,13 @@ void loop() {
       String data = (String)Serial_sim.readStringUntil('\n');
       megaDato = data;
       //Serial.print(data);
-      Serial.print(megaDato);
+      Serial.println(megaDato);
     }
-  if(megaDato == "333333"){
+  if(megaDato == "1000"){
       digitalWrite(led10, HIGH);
       digitalWrite(led6, LOW);
     }
-  if(megaDato == "222222"){
+  if(megaDato == "1001"){
       digitalWrite(led10, LOW);
       digitalWrite(led6, HIGH);
     }

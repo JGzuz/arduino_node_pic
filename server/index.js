@@ -1,7 +1,7 @@
 const SerialPort = require("serialport")//importar modulo para comunicacion serial
 const Readline = SerialPort.parsers.Readline
 const parser = new Readline()
-const mySerial = new SerialPort("COM3", {baudRate: 115200})//configuracion puerto y velocidad de transmision
+const mySerial = new SerialPort("COM18", {baudRate: 115200})//configuracion puerto y velocidad de transmision
 
 //declaracion de varaibles
 let numArduino, numeroApto;
@@ -9,17 +9,21 @@ let parteAnterior;
 let sub_bufer;
 
 //mandar datos a arduino
+/*
 function enviaDato() {
-    mySerial.write('A')
+    mySerial.write('ATC_WRITE')
     //mySerial.write(Buffer.from('H'))
     console.log("led encendido...")
     
-}
+}*/
 
 function cadenas() {
     setTimeout(() => {
-        mySerial.write('A') 
+        mySerial.write('ATC_WRITE') 
     },5000)
+    setTimeout(()=>{
+        mySerial.write('ATC_SEND')
+    },8000)
 }
 
 //evento comunicacion serial arbierta
@@ -68,7 +72,7 @@ mySerial.on("data", function (data) {
     //si el dato leido por el puerto serie contiene 10 digitos
     if(numArduino.length === 12){
             numeroApto = clientes.filter(verificaNumero)
-            enviaDato();
+            //enviaDato();
     }
 })
 
