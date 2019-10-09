@@ -44,7 +44,7 @@ void loop() {
       Serial.println("MSN_ENVIADO");
       digitalWrite(led10, HIGH);
       digitalWrite(led6, HIGH);
-      delay(1500);
+      delay(100);
       digitalWrite(led10, LOW);
       digitalWrite(led6, LOW);
       megaDato = "";
@@ -83,7 +83,7 @@ void loop() {
       Serial_sim.println("1000000006");delay(100);Serial.println("1000000006");
       Serial_sim.println("1000000007");delay(100);Serial.println("1000000007");
       Serial_sim.println("1000000008");delay(100);Serial.println("1000000008");
-      Serial_sim.println("1000000008");delay(100);Serial.println("1000000009");
+      Serial_sim.println("1000000009");delay(100);Serial.println("1000000009");
       Serial_sim.println("1000000010");delay(100);Serial.println("1000000010");
       Serial_sim.println("1000000011");delay(100);Serial.println("1000000011");
       Serial_sim.println("1000000012");delay(100);Serial.println("1000000012");

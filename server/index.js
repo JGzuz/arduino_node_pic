@@ -3,10 +3,12 @@ const Readline = SerialPort.parsers.Readline
 const parser = new Readline()
 const mySerial = new SerialPort("COM18", {baudRate: 115200})//configuracion puerto y velocidad de transmision
 
+
 //declaracion de varaibles
-let numArduino, numeroApto;
-let parteAnterior;
-let sub_bufer;
+let numArduino, numeroApto, numOK2
+let parteAnterior
+let sub_bufer
+let numRecarga = []
 
 //mandar datos a arduino
 /*
@@ -38,10 +40,16 @@ mySerial.on("open", function() {
     cadenas();
 })
 
-
+async function recargaNum(numArduino) {
+    return new Promise((resolve, reject)=>{
+        setTimeout(()=>{
+            resolve(numOK2 = clientes.filter(verificaNumero))
+        },8000)
+    })
+}
 
 //funcion para verificar si el numero esta en la base de datos
-function verificaNumero(cliente) {
+function verificaNumero(cliente) {//numArduino =>
     if(cliente.numero === parseInt(numArduino)){
         console.log(`Se encontro una coincidencia: ${cliente.numero} == ${numArduino}`)
         console.log(`El numero ${numArduino}se ha recargado exitosamente`)
@@ -77,8 +85,16 @@ mySerial.on("data", function (data) {
 
     //si el dato leido por el puerto serie contiene 10 digitos
     if(numArduino.length === 12){
+            numRecarga.push(parseInt(numArduino))
+            console.log(numRecarga)
+            recargaNum(numArduino)
+            
+            //numeroApto = clientes.filter(verificaNumero)
+
+
+            /*Descomentar esta parte para enviar un numero a la funcion, en vez de un array
             numeroApto = clientes.filter(verificaNumero)
-            //enviaDato();
+            //enviaDato();*/
     }
 })
 
