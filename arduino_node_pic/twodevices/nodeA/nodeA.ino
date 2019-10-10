@@ -12,12 +12,14 @@ void setup() {
     Serial.begin(115200);
     Serial_sim.begin(115200);
     delay(50);
-    Serial.println("COMUNICACION ARD-PC, ARD-SIM INICIALIZADAS");
+    /*descomnetar solo cuando se use la terminal del puerto serial arduino
+    Serial.println("COMUNICACION ARD-PC, ARD-SIM INICIALIZADAS");*/
     pinMode(led11, OUTPUT);
     pinMode(led6, OUTPUT);
     pinMode(push12, INPUT);
     pinMode(push5, INPUT);
-    Serial_sim.print("123");Serial_sim.print(456);Serial_sim.write("ABC");
+    
+    Serial_sim.print("12345");//datos para comprobar que le llegan datos al modulo sim800L
   } 
 
 void loop() {

@@ -5,7 +5,7 @@ const mySerial = new SerialPort("COM18", {baudRate: 115200})//configuracion puer
 
 
 //declaracion de varaibles
-let numArduino, numeroApto, numOK2
+let numArduino="", numeroApto, numOK2
 let parteAnterior
 let sub_bufer
 let numRecarga = []
@@ -18,20 +18,44 @@ function enviaDato() {
     console.log("led encendido...")
     
 }*/
+/*
+//funcion para enviar una lista de numeros
+function listarNumeros(lista){
+    for(let i=0; i<=lista.length; i++){
+        numArduino = lista[i]
+        numOK2 = clientes.filter(verificaNumero)
+    }
+}*/
+
+
 
 function cadenas() {
+    
     setTimeout(() => {
         mySerial.write('ATC_WRITE') 
     },5000)
     setTimeout(()=>{
         mySerial.write('ATC_SEND')
     },8000)
+    setTimeout(()=>{
+        mySerial.write('MSN_ENVIADO')
+    },9000)
+    setTimeout(()=>{
+        mySerial.write('MSN_ENVIADO')
+    },10000)
+    setTimeout(()=>{
+        mySerial.write('MSN_ENVIADO')
+    },11000)
+    setTimeout(()=>{
+        mySerial.write('MSN_ENVIADO')
+    },12000)
+   
 }
 
 function enviaMsn() {
     setTimeout(()=>{
         mySerial.write('MSN_ENVIADO')
-    }, 2000)
+    }, 500)
 }
 
 //evento comunicacion serial arbierta
@@ -40,11 +64,12 @@ mySerial.on("open", function() {
     cadenas();
 })
 
+//filtra el numero para comprovar si esta en basesita
 async function recargaNum(numArduino) {
     return new Promise((resolve, reject)=>{
         setTimeout(()=>{
             resolve(numOK2 = clientes.filter(verificaNumero))
-        },8000)
+        },3000)
     })
 }
 
@@ -52,9 +77,15 @@ async function recargaNum(numArduino) {
 function verificaNumero(cliente) {//numArduino =>
     if(cliente.numero === parseInt(numArduino)){
         console.log(`Se encontro una coincidencia: ${cliente.numero} == ${numArduino}`)
-        console.log(`El numero ${numArduino}se ha recargado exitosamente`)
+        enviaMsn()
+        setTimeout(()=>{
+            console.log(`El numero ${numArduino}se ha recargado exitosamente`)
+        },2000)
+
+        numeroArduino = ""
+        
         console.log("------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-        enviaMsn();
+        
         return true
     }
 }
@@ -84,19 +115,22 @@ mySerial.on("data", function (data) {
     }
 
     //si el dato leido por el puerto serie contiene 10 digitos
-    if(numArduino.length === 12){
+    if(numArduino.length === 12){/*
             numRecarga.push(parseInt(numArduino))
-            console.log(numRecarga)
-            recargaNum(numArduino)
-            
-            //numeroApto = clientes.filter(verificaNumero)
-
-
-            /*Descomentar esta parte para enviar un numero a la funcion, en vez de un array
+            console.log(numRecarga)*/
             numeroApto = clientes.filter(verificaNumero)
-            //enviaDato();*/
+            
+            /*
+            //funcion para enviar una lista de numeros
+            setTimeout(()=>{
+                listarNumeros(numRecarga)
+            },5000)*/
+
+            //recargaNum(numArduino)
+            //numRecarga.splice(0,numRecarga.length)
     }
 })
+
 
 //evento de error
 mySerial.on("err", function(err) {
@@ -108,7 +142,7 @@ mySerial.on("err", function(err) {
 //basesita de datos falsos uwuwuwuw
 var cliente1 = {
     nombre: "Juan",
-    numero: 1000000000,
+    numero: 1111111111,
     id: "00000asdf1",
     activo: true,
     edad: 22
@@ -119,12 +153,12 @@ const cliente2 = {
     id: "00000asdf1",
     activo: true,
     edad: 32,
-    numero: 1000000001
+    numero: 1000000020
 }
 
 const cliente3 = {
     nombre: "Luisa",
-    numero: 1000000002,
+    numero: 1000000030,
     id: "00000asdf1",
     activo: true,
     edad: 28
@@ -132,7 +166,7 @@ const cliente3 = {
 
 const cliente4 = {
     nombre: "Brayan",
-    numero: 1000000003,
+    numero: 1000000040,
     id: "00000asdf1",
     activo: true,
     edad: 59
@@ -140,7 +174,7 @@ const cliente4 = {
 
 const cliente5 = {
     nombre: "Steve",
-    numero: 1000000004,
+    numero: 1000000050,
     id: "00000asdf1",
     activo: true,
     edad: 30
@@ -148,7 +182,7 @@ const cliente5 = {
 
 const cliente6 = {
     nombre: "persona6",
-    numero: 1000000005,
+    numero: 1000000060,
     id: "00000asdf1",
     activo: true,
     edad: 30
@@ -156,7 +190,7 @@ const cliente6 = {
 
 const cliente7 = {
     nombre: "persona6",
-    numero: 1000000006,
+    numero: 1000000070,
     id: "00000asdf1",
     activo: true,
     edad: 30
@@ -164,7 +198,7 @@ const cliente7 = {
 
 const cliente8 = {
     nombre: "persona6",
-    numero: 1000000007,
+    numero: 1000000080,
     id: "00000asdf1",
     activo: true,
     edad: 30
@@ -172,7 +206,7 @@ const cliente8 = {
 
 const cliente9 = {
     nombre: "persona6",
-    numero: 1000000008,
+    numero: 1000000090,
     id: "00000asdf1",
     activo: true,
     edad: 30
@@ -180,7 +214,7 @@ const cliente9 = {
 
 const cliente10 = {
     nombre: "persona6",
-    numero: 1000000009,
+    numero: 1000000091,
     id: "00000asdf1",
     activo: true,
     edad: 30
@@ -188,7 +222,7 @@ const cliente10 = {
 
 const cliente11 = {
     nombre: "persona6",
-    numero: 1000000010,
+    numero: 1000000092,
     id: "00000asdf1",
     activo: true,
     edad: 30
@@ -196,7 +230,7 @@ const cliente11 = {
 
 const cliente12 = {
     nombre: "persona6",
-    numero: 1000000011,
+    numero: 1000000093,
     id: "00000asdf1",
     activo: true,
     edad: 30
@@ -204,7 +238,7 @@ const cliente12 = {
 
 const cliente13 = {
     nombre: "persona6",
-    numero: 1000000012,
+    numero: 1000000094,
     id: "00000asdf1",
     activo: true,
     edad: 30
