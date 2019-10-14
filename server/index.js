@@ -32,23 +32,12 @@ function listarNumeros(lista){
 function cadenas() {
     
     setTimeout(() => {
-        mySerial.write('ATC_WRITE') 
+        mySerial.write('ATC_ON') 
     },5000)
     setTimeout(()=>{
-        mySerial.write('ATC_SEND')
+        mySerial.write('ATC_OFF')
     },8000)
-    setTimeout(()=>{
-        mySerial.write('MSN_ENVIADO')
-    },9000)
-    setTimeout(()=>{
-        mySerial.write('MSN_ENVIADO')
-    },10000)
-    setTimeout(()=>{
-        mySerial.write('MSN_ENVIADO')
-    },11000)
-    setTimeout(()=>{
-        mySerial.write('MSN_ENVIADO')
-    },12000)
+    
    
 }
 
