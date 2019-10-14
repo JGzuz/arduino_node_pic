@@ -6,6 +6,7 @@ const int led6 = 6;
 const int push12 = 12;
 const int push5 = 5;
 String megaDato;
+String giga = "HOLA";
 unsigned long datoNumerico = 0;
 
 void setup() {
@@ -13,10 +14,11 @@ void setup() {
     Serial_sim.begin(115200);
     delay(50);
     Serial_sim.println("AT+CMGF=1");//Vamos a utilizatr los SMS
-    delay(100);
+    delay(200);
     
     Serial_sim.println("AT+CNMI=1,2,0,0,0"); /*configurar modulo sim800L para enviar msn por
     puerto serie*/
+    delay(200);
     /*descomnetar solo cuando se use la terminal del puerto serial arduino
     Serial.println("COMUNICACION ARD-PC, ARD-SIM INICIALIZADAS");*/
     pinMode(led11, OUTPUT);
@@ -41,10 +43,14 @@ void loop() {
       
     //cuando reciba datos por el puerto serie virtual del sim800L (simulado con otro arduino)
     if(Serial_sim.available()){
+      /*
+        String data1 = (String)Serial.readStringUntil('\n');
+        Serial.print(data1);*/
+        //delay(3);
         Serial.print((char)Serial_sim.read());
       }
 
-    if(megaDato == "ATC_SEND"){
+    if(megaDato == "ATC_ON"){
       digitalWrite(led11, HIGH);
       digitalWrite(led6, LOW);
       Serial_sim.print("1000");
@@ -53,7 +59,7 @@ void loop() {
       megaDato = "";
       }
 
-    if(megaDato == "ATC_WRITE"){
+    if(megaDato == "ATC_OFF"){
       digitalWrite(led6, HIGH);
       digitalWrite(led11, LOW);
       Serial_sim.print("1001");
@@ -69,8 +75,11 @@ void loop() {
 
     
     if(digitalRead(push5)==1){
+        
+        
         while(digitalRead(push5)==1){;}
-        Serial.print("string do not problem");
+        Serial.print(giga);
+        //Serial.print("string do not problem");
       }
 
     if(digitalRead(push12)==1){

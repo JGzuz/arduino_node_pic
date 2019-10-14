@@ -33,10 +33,10 @@ function cadenas() {
     
     setTimeout(() => {
         mySerial.write('ATC_ON') 
-    },5000)
+    },10000)
     setTimeout(()=>{
         mySerial.write('ATC_OFF')
-    },8000)
+    },15000)
     
    
 }
@@ -79,45 +79,61 @@ function verificaNumero(cliente) {//numArduino =>
     }
 }
 
+function seccionar(datos) {
+    let numDeCliente
+    let numARecargar
+    numDeCliente = datos.substr(8,17)
+    console.log(`Numero de cliente ${numDeCliente}`)
+    numARecargar = datos.substr(46,55)
+    console.log(`Numero a recargar ${numARecargar}`)
+}
+
 //escucha datos en buffer
 mySerial.on("data", function (data) {
     console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<----------------")
     console.log(`Nuevo dato recibido: ${data.toString()}`)
-    console.log(`Buffer: ${parteAnterior}`)
     numArduino = data.toString()
-    console.log(`Iniciando comparativa de: ${numArduino}`)
+
+    setTimeout(()=>{
+        seccionar(numArduino)
+    },2000)
+
+    
+
+    //console.log(`tamaño mensaja ${numArduino.length}`)
+    //console.log(`caracter 0: ${numArduino.charAt(1)}`)
+    //console.log(`caracter 40: ${numArduino.charAt(55)}`)
+    //console.log(`Buffer: ${parteAnterior}`)
+    //console.log(`Iniciando comparativa de: ${numArduino}`)
 
     //verifica si tenemos una parte de un numero anterior, y la concatena con la siguinte lectura
+    /*//Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
     if((numArduino.length < 12) && (sub_bufer === 1)){
         numArduino = parteAnterior + data.toString()
         console.log(`Nuevo numero concatenado: ${numArduino}`)
         sub_bufer = 0
         parteAnterior = "undefined"
-    }
+    }*////Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
 
     //verificar el tamaño del numero
+    /*//Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
     console.log(`Tamaño de cadena: ${numArduino.length}`)
     if(numArduino.length < 12){
         parteAnterior = numArduino
-        sub_bufer = 1
+        sub_bufer = 1*///Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
         //console.log(`nueva cadena: ${numArduino}`)
-    }
+    /*}*///Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
 
     //si el dato leido por el puerto serie contiene 10 digitos
-    if(numArduino.length === 12){/*
-            numRecarga.push(parseInt(numArduino))
-            console.log(numRecarga)*/
-            numeroApto = clientes.filter(verificaNumero)
-            
+  /* if(numArduino.length === 12){*///Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
             /*
-            //funcion para enviar una lista de numeros
-            setTimeout(()=>{
-                listarNumeros(numRecarga)
-            },5000)*/
-
-            //recargaNum(numArduino)
-            //numRecarga.splice(0,numRecarga.length)
-    }
+            numRecarga.push(parseInt(numArduino))//agregar un elemento a un array
+            console.log(numRecarga)*/
+         //numeroApto = clientes.filter(verificaNumero)//Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+            
+            //recargaNum(numArduino)//
+            //numRecarga.splice(0,numRecarga.length)//para eliminar un elemneto de array
+    /*}*///Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
 })
 
 
