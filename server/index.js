@@ -82,10 +82,10 @@ function verificaNumero(cliente) {//numArduino =>
 function seccionar(datos) {
     let numDeCliente
     let numARecargar
-    numDeCliente = datos.substr(8,17)
-    console.log(`Numero de cliente ${numDeCliente}`)
-    numARecargar = datos.substr(46,55)
-    console.log(`Numero a recargar ${numARecargar}`)
+    numDeCliente = datos.substr(5,10)
+    console.log(`Numero de cliente: ${numDeCliente}`)
+    numARecargar = datos.substr(46,10)
+    console.log(`Numero a recargar: ${numARecargar}`)
 }
 
 //escucha datos en buffer
