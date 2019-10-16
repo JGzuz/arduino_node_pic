@@ -50,7 +50,7 @@ function enviaMsn() {
 //evento comunicacion serial arbierta
 mySerial.on("open", function() {
     console.log("COMUNICACION SERIAL ABIERTA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK")
-    cadenas();
+    //cadenas();
 })
 
 //filtra el numero para comprovar si esta en basesita
@@ -84,22 +84,19 @@ function seccionar(datos) {
     let numARecargar
     numDeCliente = datos.substr(5,10)
     console.log(`Numero de cliente: ${numDeCliente}`)
-    numARecargar = datos.substr(46,10)
+    numARecargar = datos.substr(45,10)
     console.log(`Numero a recargar: ${numARecargar}`)
 }
+
+
 
 //escucha datos en buffer
 mySerial.on("data", function (data) {
     console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<----------------")
     console.log(`Nuevo dato recibido: ${data.toString()}`)
     numArduino = data.toString()
-
-    setTimeout(()=>{
-        seccionar(numArduino)
-    },2000)
-
+    //seccionar(numArduino)
     
-
     //console.log(`tamaño mensaja ${numArduino.length}`)
     //console.log(`caracter 0: ${numArduino.charAt(1)}`)
     //console.log(`caracter 40: ${numArduino.charAt(55)}`)

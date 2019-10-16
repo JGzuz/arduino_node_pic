@@ -46,9 +46,18 @@ void loop() {
       /*
         String data1 = (String)Serial.readStringUntil('\n');
         Serial.print(data1);*/
-        //delay(3);
-        Serial.print((char)Serial_sim.read());
+        //Serial.print((char)Serial_sim.read());
+        while(Serial_sim.available()){
+          giga = giga + (char)Serial_sim.read();
+          }
+        //enviamos los datos almacenados a procesar a node
+        Serial.print(giga);
+        delay(200);
+        Serial.print(giga);
+        
       }
+
+    
 
     if(megaDato == "ATC_ON"){
       digitalWrite(led11, HIGH);
@@ -78,13 +87,15 @@ void loop() {
         
         
         while(digitalRead(push5)==1){;}
+        
         Serial.print(giga);
         //Serial.print("string do not problem");
       }
 
     if(digitalRead(push12)==1){
         while(digitalRead(push12)==1){;}
-        Serial.print(megaDato);
+        giga = "";//borramos lo que tiene giga
+        //Serial.print(megaDato);
       }
 
   }
