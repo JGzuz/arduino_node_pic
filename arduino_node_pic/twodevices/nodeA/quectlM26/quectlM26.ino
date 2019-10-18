@@ -17,7 +17,15 @@ void setup() {
     Serial.begin(115200);
     Serial_sim.begin(115200);
     delay(4000);
-
+    Serial_sim.print("AT+CMGF=1");//Vamos a utilizatr los SMS
+    delay(200);
+    /*
+    Serial_sim.println("AT+CNMI=1,2,0,0,0"); configurar modulo sim800L para enviar msn por
+    puerto serie*/
+    
+    
+    
+    Serial_sim.print("AT+GMI");
 
     //comandos para trabajar con el sim800L
     /* Serial_sim.println("AT+CMGF=1");//Vamos a utilizatr los SMS
@@ -45,27 +53,16 @@ void loop() {
 
   //cuando reciba datos del puerto Serial hardware de la pc
     if(Serial.available()){
+        
         String data = (String)Serial.readStringUntil('\n');
         megaDato = data;
-        datoNumerico = String(megaDato).toInt();
-        //Serial.print(data);
-        //Serial.print(megaDato);
+        Serial_sim.print(megaDato);
       }
 
     
     //cuando reciba datos por el puerto serie virtual del sim800L (simulado con otro arduino)
     if(Serial_sim.available()){
-      /*
-        String data1 = (String)Serial.readStringUntil('\n');
-        Serial.print(data1);*/
-        //Serial.print((char)Serial_sim.read());
-        
-        while(Serial_sim.available()){
-          giga = giga + (char)Serial_sim.read();
-          }
-        //enviamos los datos almacenados a procesar a node
-        Serial.print("+CMV: +4661016976+,++,+19/10/17,13:53:02-20+ 1234567890 ");
-        delay(500);
+        Serial.print((char)Serial_sim.read());
       }
 
     if(megaDato == "ATC_ON"){
