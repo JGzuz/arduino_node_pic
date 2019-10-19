@@ -16,7 +16,7 @@ unsigned long datoNumerico = 0;
 void setup() {
     Serial.begin(115200);
     Serial_sim.begin(115200);
-    delay(4000);
+    delay(2000);
 
 
     //comandos para trabajar con el sim800L
