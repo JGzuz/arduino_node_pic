@@ -95,43 +95,21 @@ mySerial.on("data", function (data) {
     console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<----------------")
     console.log(`Nuevo dato recibido: ${data.toString()}`)
     numArduino = data.toString()
-    //seccionar(numArduino)
+    console.log(`Tamaño: ${numArduino.length}`)
     
-    //console.log(`tamaño mensaja ${numArduino.length}`)
-    //console.log(`caracter 0: ${numArduino.charAt(1)}`)
-    //console.log(`caracter 40: ${numArduino.charAt(55)}`)
-    //console.log(`Buffer: ${parteAnterior}`)
-    //console.log(`Iniciando comparativa de: ${numArduino}`)
-
-    //verifica si tenemos una parte de un numero anterior, y la concatena con la siguinte lectura
-    /*//Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
     if((numArduino.length < 12) && (sub_bufer === 1)){
         numArduino = parteAnterior + data.toString()
         console.log(`Nuevo numero concatenado: ${numArduino}`)
         sub_bufer = 0
         parteAnterior = "undefined"
-    }*////Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
-
-    //verificar el tamaño del numero
-    /*//Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
-    console.log(`Tamaño de cadena: ${numArduino.length}`)
-    if(numArduino.length < 12){
+    }
+    if(numArduino.length < 48){
         parteAnterior = numArduino
-        sub_bufer = 1*///Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
-        //console.log(`nueva cadena: ${numArduino}`)
-    /*}*///Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+        sub_bufer = 1
+        console.log(`nueva cadena: ${numArduino}`)
+      }
 
-    //si el dato leido por el puerto serie contiene 10 digitos
-  /* if(numArduino.length === 12){*///Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
-            /*
-            numRecarga.push(parseInt(numArduino))//agregar un elemento a un array
-            console.log(numRecarga)*/
-         //numeroApto = clientes.filter(verificaNumero)//Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
-            
-            //recargaNum(numArduino)//
-            //numRecarga.splice(0,numRecarga.length)//para eliminar un elemneto de array
-    /*}*///Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
-})
+})//FIN DE RUTINA DE LECTURA DEL PUERTO SERIAL
 
 
 //evento de error
