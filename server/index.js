@@ -97,6 +97,7 @@ mySerial.on("data", function (data) {
     numArduino = data.toString()
     console.log(`Tamaño: ${numArduino.length}`)
     
+    /*
     if((numArduino.length < 12) && (sub_bufer === 1)){
         numArduino = parteAnterior + data.toString()
         console.log(`Nuevo numero concatenado: ${numArduino}`)
@@ -107,7 +108,7 @@ mySerial.on("data", function (data) {
         parteAnterior = numArduino
         sub_bufer = 1
         console.log(`nueva cadena: ${numArduino}`)
-      }
+      }*/
 
 })//FIN DE RUTINA DE LECTURA DEL PUERTO SERIAL
 
