@@ -9,6 +9,8 @@ let numArduino="", numeroApto, numOK2
 let parteAnterior
 let sub_bufer
 let numRecarga = []
+let datoCliente
+let chargeNum, clienteNum
 
 //mandar datos a arduino
 /*
@@ -94,21 +96,29 @@ function seccionar(datos) {
 mySerial.on("data", function (data) {
     console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<----------------")
     console.log(`Nuevo dato recibido: ${data.toString()}`)
+    //console.log(`Tamaño: ${numArduino.length}`)
+    //analicis del dato 
     numArduino = data.toString()
-    console.log(`Tamaño: ${numArduino.length}`)
+    datoCliente = numArduino.substr(0,5)
     
-    /*
-    if((numArduino.length < 12) && (sub_bufer === 1)){
+
+    if((numArduino.length < 50) && (sub_bufer === 1)){
         numArduino = parteAnterior + data.toString()
-        console.log(`Nuevo numero concatenado: ${numArduino}`)
+        console.log(`Nueva cadena concatenada: ${numArduino}`)
+        console.log(`Nuevo tamaño: ${numArduino.length}`)
+        clienteNum = numArduino.substr(7,10)
+        chargeNum = numArduino.substr(45, numArduino.length)
+        console.log(`Numero que solicita: ${clienteNum}`)
+        console.log(`Numero a recargar: ${chargeNum}`)
         sub_bufer = 0
         parteAnterior = "undefined"
     }
-    if(numArduino.length < 48){
+    if((numArduino.length < 50) && (datoCliente === "+CMT:")){
+        console.log(`Nueva recarga en proceso ${datoCliente}`)
         parteAnterior = numArduino
         sub_bufer = 1
-        console.log(`nueva cadena: ${numArduino}`)
-      }*/
+        console.log(`Primera parte de cadena: ${numArduino}`)
+      }
 
 })//FIN DE RUTINA DE LECTURA DEL PUERTO SERIAL
 

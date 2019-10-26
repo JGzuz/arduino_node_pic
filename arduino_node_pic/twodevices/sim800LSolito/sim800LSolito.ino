@@ -3,6 +3,7 @@ SoftwareSerial sim800L(8,9);
 String valor="undefined";
 String datosPc;
 String imei="undefined";
+int config_Start = 0;
 
 int x = 0;
 
@@ -58,8 +59,7 @@ void setup() {
   delay(2000);*/
   sim800L.print("AT\r");
   delay(200);
-  Serial.print("ConfigOk");
-  delay(5000);
+  
 }
 
 void loop() {
@@ -67,11 +67,11 @@ void loop() {
   
   
   if(sim800L.available() != 0){
-    valor = sim800L.readString();
-    delay(100);
-    Serial.print(valor);
-    
-    delay(100);//descomnetar para ver en monitor serie arduino
+
+      valor = sim800L.readString();
+      delay(100);
+      Serial.print(valor);
+      delay(100);//descomnetar para ver en monitor serie arduino
     }
 
   if(Serial.available()){
@@ -91,7 +91,7 @@ void loop() {
   if(digitalRead(push2)==1){
       while(digitalRead(push2)==1){;}
       digitalWrite(bjt4, LOW);
-      Serial.print("+CMT: -4761016976-,--,-19/10/25,0c:43:24-20- Hola2");      
+      Serial.print("+CMT: -4761016976-,--,-19/10/25,01:43:24-20- 4451882040");      
     }
   if(digitalRead(push5)==1){
       while(digitalRead(push5)==1){;}
