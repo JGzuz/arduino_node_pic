@@ -7,10 +7,11 @@ const mySerial = new SerialPort("COM18", {baudRate: 115200})//configuracion puer
 //declaracion de varaibles
 let numArduino="", numeroApto, numOK2
 let parteAnterior
-let sub_bufer
+let sub_bufer //bandera para iniciar el proceso de recarga
 let numRecarga = []
 let datoCliente
-let chargeNum, clienteNum
+let chargeNum, clienteNum, fechaRecarga
+let getMsn = 0 //bandera pa indicar que la siguinte informacion que se reciba es el texto del msn
 
 //mandar datos a arduino
 /*
@@ -101,16 +102,23 @@ mySerial.on("data", function (data) {
     numArduino = data.toString()
     datoCliente = numArduino.substr(0,5)
     
+    if(getMsn === 1){
+        console.log(`Texto del mensaje: `)
+    }
 
     if((numArduino.length < 50) && (sub_bufer === 1)){
         numArduino = parteAnterior + data.toString()
         console.log(`Nueva cadena concatenada: ${numArduino}`)
         console.log(`Nuevo tamaño: ${numArduino.length}`)
         clienteNum = numArduino.substr(7,10)
-        chargeNum = numArduino.substr(45, numArduino.length)
+        fechaRecarga = numArduino.substr(23,20)
+        //chargeNum = numArduino.substr(45, numArduino.length)
         console.log(`Numero que solicita: ${clienteNum}`)
-        console.log(`Numero a recargar: ${chargeNum}`)
+        console.log(`fecha de solicitud: ${fechaRecarga}`)
+        //console.log(`Numero a recargar: ${chargeNum}`)
+
         sub_bufer = 0
+        getMsn = 1
         parteAnterior = "undefined"
     }
     if((numArduino.length < 50) && (datoCliente === "+CMT:")){
