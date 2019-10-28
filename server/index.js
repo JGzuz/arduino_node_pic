@@ -12,7 +12,7 @@ let numRecarga = []
 let datoCliente
 let chargeNum, clienteNum, fechaRecarga
 let getMsn = 0 //bandera pa indicar que la siguinte informacion que se reciba es el texto del msn
-
+let modOk = 0
 //mandar datos a arduino
 /*
 function enviaDato() {
@@ -95,37 +95,54 @@ function seccionar(datos) {
 
 //escucha datos en buffer
 mySerial.on("data", function (data) {
-    console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<----------------")
-    console.log(`Nuevo dato recibido: ${data.toString()}`)
-    //console.log(`Tamaño: ${numArduino.length}`)
-    //analicis del dato 
-    numArduino = data.toString()
-    datoCliente = numArduino.substr(0,5)
-    
-    if(getMsn === 1){
-        console.log(`Texto del mensaje: `)
+    if(modOk < 2){modOk++}
+    if(modOk === 2){
+     console.log(`MODULO INICIALIZADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
+     modOk = 3
     }
+    
+    //console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<----------------")
+    //console.log(`Nuevo dato recibido: ${data.toString()}`)//descomentar para ver el dato recibido
+    //console.log(`Tamaño: ${numArduino.length}`)
+
+    numArduino = data.toString()
+    //console.log(`Se detecto un + en la posicion: ${numArduino.indexOf('+')}`)
+    //espera a recibir un '+' para identificar que es un msn y compara con +CMT: para comprobarlo
+    datoCliente = numArduino.substr(numArduino.indexOf('+'),5)
+    
+    /*
+    if(getMsn === 1){
+        console.log(`Texto del mensaje: ${numArduino}`)
+    }*/
 
     if((numArduino.length < 50) && (sub_bufer === 1)){
         numArduino = parteAnterior + data.toString()
-        console.log(`Nueva cadena concatenada: ${numArduino}`)
-        console.log(`Nuevo tamaño: ${numArduino.length}`)
-        clienteNum = numArduino.substr(7,10)
-        fechaRecarga = numArduino.substr(23,20)
-        //chargeNum = numArduino.substr(45, numArduino.length)
+        //console.log(`Nueva cadena concatenada: ${numArduino}`) descomentar para ver la cadena completa
+        //console.log(`Nuevo tamaño: ${numArduino.length}`)
+        clienteNum = numArduino.substr(((numArduino.indexOf('+'))+7),10)
+        fechaRecarga = numArduino.substr(((numArduino.indexOf('+'))+23),20)
+        chargeNum = numArduino.substr(((numArduino.indexOf('+'))+46), 10)
         console.log(`Numero que solicita: ${clienteNum}`)
-        console.log(`fecha de solicitud: ${fechaRecarga}`)
-        //console.log(`Numero a recargar: ${chargeNum}`)
+        //console.log(`Tamaño de numero que solicita: ${clienteNum.length}`)
 
+        console.log(`fecha de solicitud: ${fechaRecarga}`)
+        //console.log(`Tamaño de la fecha: ${fechaRecarga.length}`)
+
+        console.log(`Numero a recargar: ${chargeNum}`)
+        //console.log(`Tamaño de numero a recargar: ${chargeNum.length}`)
+        
         sub_bufer = 0
-        getMsn = 1
+        //getMsn = 1
         parteAnterior = "undefined"
+        console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>READY TO NEXT`)
+        
     }
+
     if((numArduino.length < 50) && (datoCliente === "+CMT:")){
         console.log(`Nueva recarga en proceso ${datoCliente}`)
         parteAnterior = numArduino
         sub_bufer = 1
-        console.log(`Primera parte de cadena: ${numArduino}`)
+        //console.log(`Primera parte de cadena: ${numArduino}`)
       }
 
 })//FIN DE RUTINA DE LECTURA DEL PUERTO SERIAL

@@ -91,7 +91,7 @@ void loop() {
   if(digitalRead(push2)==1){
       while(digitalRead(push2)==1){;}
       digitalWrite(bjt4, LOW);
-      Serial.print("+CMT: -4761016976-,--,-19/10/25,01:43:24-20- 4451882040");      
+      Serial.print("+CMT: -4761016976-,--,-19/10/25,01:43:24-20-  4451882040");      
     }
   if(digitalRead(push5)==1){
       while(digitalRead(push5)==1){;}
