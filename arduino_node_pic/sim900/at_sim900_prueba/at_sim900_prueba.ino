@@ -1,33 +1,25 @@
 #include <SoftwareSerial.h>
 SoftwareSerial sim900(7, 8); //Rx: 7, Tx: 8
-
-String datosSim900 = "undefined";
-String datosPc = "undefined";
+char caracter;
 
 void setup() {
-  sim900.begin(115200);
-  Serial.begin(115200);
+  Serial.begin(19200);
+  sim900.begin(19200);
 
   sim900.print("AT\r");
   delay(200);
-  sim900.println("AT+CMGF=1\r");
-  delay(100);
-  sim900.println("AT+CNMI=1,2,0,0,0\r");
-  delay(100);
-  sim900.println("AT+GMI\r");
-  delay(100);
+  sim900.print("AT+CMFG=1\r");
+  delay(200);
+  
 }
 
 void loop() {
-  if (sim900.available() != 0){
-      datosSim900 = sim900.readString();
-      delay(100);
-      Serial.print(datosSim900);
-      
+  if (sim900.available()){
+      caracter = sim900.read();
+      Serial.print(caracter);
     }
-  if (Serial.available() > 0){
-      datosPc = Serial.readString();
-      delay(100);
-      sim900.print(datosPc);
+  if (Serial.available()){
+      caracter = Serial.read();
+      sim900.print(caracter);
     }
 }
