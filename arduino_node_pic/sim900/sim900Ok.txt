@@ -23,11 +23,11 @@ void setup() {
 
 void loop() {
   if (sim900.available()){
-      datosSim = sim900.readString();
-      Serial.print(datosSim);
+      caracter = sim900.read();
+      Serial.print(caracter);
     }
   if (Serial.available()){
-      datosPc = Serial.readString();
-      sim900.print(datosPc);
+      caracter = Serial.read();
+      sim900.print(caracter);
     }
 }

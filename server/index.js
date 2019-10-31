@@ -1,7 +1,7 @@
 const SerialPort = require("serialport")//importar modulo para comunicacion serial
 const Readline = SerialPort.parsers.Readline
 const parser = new Readline()
-const mySerial = new SerialPort("COM18", {baudRate: 115200})//configuracion puerto y velocidad de transmision
+const mySerial = new SerialPort("COM3", {baudRate: 19200})//configuracion puerto y velocidad de transmision
 
 
 //declaracion de varaibles
@@ -95,14 +95,15 @@ function seccionar(datos) {
 
 //escucha datos en buffer
 mySerial.on("data", function (data) {
-    if(modOk < 2){modOk++}
+    //modOk++;console.log(`${modOk}`);
+    if(modOk < 6){modOk++}
     if(modOk === 2){
      console.log(`MODULO INICIALIZADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
      modOk = 3
     }
     
     //console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<----------------")
-    //console.log(`Nuevo dato recibido: ${data.toString()}`)//descomentar para ver el dato recibido
+    console.log(`Nuevo dato recibido: ${data.toString()}`)//descomentar para ver el dato recibido
     //console.log(`Tamaño: ${numArduino.length}`)
 
     numArduino = data.toString()
