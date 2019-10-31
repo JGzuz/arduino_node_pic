@@ -31,3 +31,98 @@ void loop() {
       sim900.print(caracter);
     }
 }
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+//escucha datos en buffer
+mySerial.on("data", function (data) {
+    //modOk++;console.log(`${modOk}`);
+    /*
+    if(modOk < 6){modOk++}
+    console.log(`${modOk}`)
+    if(modOk === 6){
+     console.log(`MODULO INICIALIZADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
+     modOk = 7
+    }*/
+    
+    //console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<----------------")
+    console.log(`Nuevo dato recibido: ${data.toString()}`)//descomentar para ver el dato recibido
+    //console.log(`Tamaño: ${numArduino.length}`)
+
+    numArduino = data.toString()
+    //aui ponerlo en 0 juajaus
+
+    if(concatenandoMsn == 0){
+        cadS9 = cadS9 + numArduino
+        console.log(`Esto hay en el buffer ahora: ${cadS9}`)
+    }
+         
+
+    if(concatenandoMsn == 1){
+        
+        datoCliente = datoCliente + numArduino
+        console.log(`datos cliente: ${datoCliente}`)
+        console.log(`tamaño cadena anterior: ${datoCliente.length}`)
+        if(datoCliente.length == 58){
+            concatenadoMsn=0
+            datoCliente = ""
+        }
+    }
+    if(cadS9.indexOf("+CMT:") >= 0){
+        console.log(cadS9.indexOf("+CMT:"))
+        concatenandoMsn = 1
+            datoCliente = cadS9.substr(cadS9.indexOf('+CMT:'),cadS9.lenth)
+            console.log(`Esto pasa a datosCliente: ${datoCliente}`)
+            cadS9 = ""
+        
+        /*
+        datoCliente = cadS9.substr(cadS9.indexOf('+CMT:'),cadS9.length)
+        console.log(datoCliente)*/
+    }
+    /*Ya no lo ocupo
+    if(datoCliente.indexOf("fly")>=0){
+        for(let x = 0; x < datoCliente.length; x++){
+            console.log(`posicion ${x}: ${datoCliente.charAt(x)}`)
+        }
+    }*/
+
+    //console.log(`Se detecto un + en la posicion: ${numArduino.indexOf('+')}`)
+    //espera a recibir un '+' para identificar que es un msn y compara con +CMT: para comprobarlo
+    
+
+    /*
+    if((numArduino.length < 50) && (sub_bufer === 1)){
+        numArduino = parteAnterior + data.toString()
+        //console.log(`Nueva cadena concatenada: ${numArduino}`) descomentar para ver la cadena completa
+        //console.log(`Nuevo tamaño: ${numArduino.length}`)
+        clienteNum = numArduino.substr(((numArduino.indexOf('+'))+7),10)
+        fechaRecarga = numArduino.substr(((numArduino.indexOf('+'))+23),20)
+        chargeNum = numArduino.substr(((numArduino.indexOf('+'))+46), 10)
+        console.log(`Numero que solicita: ${clienteNum}`)
+        //console.log(`Tamaño de numero que solicita: ${clienteNum.length}`)
+
+        console.log(`fecha de solicitud: ${fechaRecarga}`)
+        //console.log(`Tamaño de la fecha: ${fechaRecarga.length}`)
+
+        console.log(`Numero a recargar: ${chargeNum}`)
+        //console.log(`Tamaño de numero a recargar: ${chargeNum.length}`)
+        
+        sub_bufer = 0
+        //getMsn = 1
+        parteAnterior = "undefined"
+        console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>READY TO NEXT`)
+        
+    }*/
+
+
+
+    /*
+    if((numArduino.length < 50) && (datoCliente === "+CMT:")){
+        console.log(`Nueva recarga en proceso ${datoCliente}`)
+        parteAnterior = numArduino
+        sub_bufer = 1
+        //console.log(`Primera parte de cadena: ${numArduino}`)
+      }*/
+
+    
+
+})//FIN DE RUTINA DE LECTURA DEL PUERTO SERIAL
