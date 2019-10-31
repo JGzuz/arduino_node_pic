@@ -9,10 +9,12 @@ let numArduino="", numeroApto, numOK2
 let parteAnterior
 let sub_bufer //bandera para iniciar el proceso de recarga
 let numRecarga = []
-let datoCliente
+let datoCliente = ""
 let chargeNum, clienteNum, fechaRecarga
 let getMsn = 0 //bandera pa indicar que la siguinte informacion que se reciba es el texto del msn
-let modOk = 0
+let modOk = 0//para llevar el conteo inicial de las veces que llegan datos
+let cadS9 = ""
+let concatenandoMsn = 0
 //mandar datos a arduino
 /*
 function enviaDato() {
@@ -40,8 +42,6 @@ function cadenas() {
     setTimeout(()=>{
         mySerial.write('ATC_OFF')
     },15000)
-    
-   
 }
 
 function enviaMsn() {
@@ -96,26 +96,60 @@ function seccionar(datos) {
 //escucha datos en buffer
 mySerial.on("data", function (data) {
     //modOk++;console.log(`${modOk}`);
+    /*
     if(modOk < 6){modOk++}
-    if(modOk === 2){
+    console.log(`${modOk}`)
+    if(modOk === 6){
      console.log(`MODULO INICIALIZADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
-     modOk = 3
-    }
+     modOk = 7
+    }*/
     
     //console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<----------------")
     console.log(`Nuevo dato recibido: ${data.toString()}`)//descomentar para ver el dato recibido
     //console.log(`Tamaño: ${numArduino.length}`)
 
     numArduino = data.toString()
-    //console.log(`Se detecto un + en la posicion: ${numArduino.indexOf('+')}`)
-    //espera a recibir un '+' para identificar que es un msn y compara con +CMT: para comprobarlo
-    datoCliente = numArduino.substr(numArduino.indexOf('+'),5)
-    
-    /*
-    if(getMsn === 1){
-        console.log(`Texto del mensaje: ${numArduino}`)
+    //aui ponerlo en 0 juajaus
+
+    if(concatenandoMsn == 0){
+        cadS9 = cadS9 + numArduino
+        console.log(`Esto hay en el buffer ahora: ${cadS9}`)
+    }
+         
+
+    if(concatenandoMsn == 1){
+        
+        datoCliente = datoCliente + numArduino
+        console.log(`datos cliente: ${datoCliente}`)
+        console.log(`tamaño cadena anterior: ${datoCliente.length}`)
+        if(datoCliente.length == 58){
+            concatenadoMsn=0
+            datoCliente = ""
+        }
+    }
+    if(cadS9.indexOf("+CMT:") >= 0){
+        console.log(cadS9.indexOf("+CMT:"))
+        concatenandoMsn = 1
+            datoCliente = cadS9.substr(cadS9.indexOf('+CMT:'),cadS9.lenth)
+            console.log(`Esto pasa a datosCliente: ${datoCliente}`)
+            cadS9 = ""
+        
+        /*
+        datoCliente = cadS9.substr(cadS9.indexOf('+CMT:'),cadS9.length)
+        console.log(datoCliente)*/
+    }
+    /*Ya no lo ocupo
+    if(datoCliente.indexOf("fly")>=0){
+        for(let x = 0; x < datoCliente.length; x++){
+            console.log(`posicion ${x}: ${datoCliente.charAt(x)}`)
+        }
     }*/
 
+    //console.log(`Se detecto un + en la posicion: ${numArduino.indexOf('+')}`)
+    //espera a recibir un '+' para identificar que es un msn y compara con +CMT: para comprobarlo
+    
+
+    /*
     if((numArduino.length < 50) && (sub_bufer === 1)){
         numArduino = parteAnterior + data.toString()
         //console.log(`Nueva cadena concatenada: ${numArduino}`) descomentar para ver la cadena completa
@@ -137,14 +171,19 @@ mySerial.on("data", function (data) {
         parteAnterior = "undefined"
         console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>READY TO NEXT`)
         
-    }
+    }*/
 
+
+
+    /*
     if((numArduino.length < 50) && (datoCliente === "+CMT:")){
         console.log(`Nueva recarga en proceso ${datoCliente}`)
         parteAnterior = numArduino
         sub_bufer = 1
         //console.log(`Primera parte de cadena: ${numArduino}`)
-      }
+      }*/
+
+    
 
 })//FIN DE RUTINA DE LECTURA DEL PUERTO SERIAL
 
