@@ -10,7 +10,7 @@ let parteAnterior
 let sub_bufer //bandera para iniciar el proceso de recarga
 let numRecarga = []
 let datoCliente = ""
-let chargeNum, clienteNum, fechaRecarga
+let chargeNum, solicitaNum, fechaRecarga
 let getMsn = 0 //bandera pa indicar que la siguinte informacion que se reciba es el texto del msn
 let modOk = 0//para llevar el conteo inicial de las veces que llegan datos
 let cadS9 = ""
@@ -91,63 +91,72 @@ function seccionar(datos) {
     console.log(`Numero a recargar: ${numARecargar}`)
 }
 
+//separa el mensaje en numero que solicita la recarga, numero al que se desea hacer la recarga, la
+//fecha de recarga, *tambien ponerle que verifique si si es un mensaje
+function Seccionador(mensaje) {
+
+    fechaRecarga = mensaje.substr((mensaje.indexOf('+') + 23),20)
+    console.log(`Fecha de solitud: ${fechaRecarga}`)
+
+    solicitaNum = mensaje.substr((mensaje.indexOf('+') + 7),10)
+    console.log(`Número que solicita: ${solicitaNum}`)
+
+    chargeNum = mensaje.substr((mensaje.indexOf('+') + 46),10)
+    console.log(`Número a recargar: ${chargeNum}`)
+
+    console.log(`PROCESO TERMINADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
+    
+}
+
 
 
 //escucha datos en buffer
 mySerial.on("data", function (data) {
-    //modOk++;console.log(`${modOk}`);
-    /*
-    if(modOk < 6){modOk++}
-    console.log(`${modOk}`)
-    if(modOk === 6){
-     console.log(`MODULO INICIALIZADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
-     modOk = 7
-    }*/
-    
-    //console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<----------------")
     console.log(`Nuevo dato recibido: ${data.toString()}`)//descomentar para ver el dato recibido
     //console.log(`Tamaño: ${numArduino.length}`)
 
-    numArduino = data.toString()
-    //aui ponerlo en 0 juajaus
+    numArduino = data.toString()//guardamos en una variable lo que se recibio por el puerto serie
 
+    //acumulamos en una cadena todo lo que vaya llegando por el puerto serie
     if(concatenandoMsn == 0){
         cadS9 = cadS9 + numArduino
-        console.log(`Esto hay en el buffer ahora: ${cadS9}`)
+       // console.log(`Esto hay en el buffer ahora: ${cadS9}`) para ver lo acumulado en la cadena
     }
-         
 
+    //para verificar cuando el modulo se haya inicializado
+    if(cadS9.indexOf("AT+CMGF=") >= 0){
+        setTimeout(()=>{
+            console.log(`MODULO INICIALIZADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
+        },1000)
+        cadS9 = ""//limpiamos la cadena para que no entre constantamente aqui
+    }
+
+    //dejamos de acumular en la cadena cadS9 y acumulamos en una cadana nueva, donde se almacenara 
+    //el msn entero
     if(concatenandoMsn == 1){
-        
         datoCliente = datoCliente + numArduino
-        console.log(`datos cliente: ${datoCliente}`)
-        console.log(`tamaño cadena anterior: ${datoCliente.length}`)
-        if(datoCliente.length == 58){
+        //console.log(`tamaño cadena anterior: ${datoCliente.length}`)
+        if(datoCliente.length >= 58){
+            
+            console.log(`NUEVO MSN START PROCESS................................................`)
+            console.log(`${datoCliente}`)
+            Seccionador(datoCliente)
             concatenadoMsn=0
             datoCliente = ""
         }
     }
+
+    //espera a recibir un '+CMT:' para identificar que es un SMS 
     if(cadS9.indexOf("+CMT:") >= 0){
-        console.log(cadS9.indexOf("+CMT:"))
+        //console.log(cadS9.indexOf("+CMT:")) para ver cuando llega un nuevo sms
         concatenandoMsn = 1
-            datoCliente = cadS9.substr(cadS9.indexOf('+CMT:'),cadS9.lenth)
-            console.log(`Esto pasa a datosCliente: ${datoCliente}`)
-            cadS9 = ""
-        
+        datoCliente = cadS9.substr(cadS9.indexOf('+CMT:'),cadS9.lenth)
+        //console.log(`Esto pasa a datosCliente: ${datoCliente}`)
+        cadS9 = ""
         /*
         datoCliente = cadS9.substr(cadS9.indexOf('+CMT:'),cadS9.length)
         console.log(datoCliente)*/
     }
-    /*Ya no lo ocupo
-    if(datoCliente.indexOf("fly")>=0){
-        for(let x = 0; x < datoCliente.length; x++){
-            console.log(`posicion ${x}: ${datoCliente.charAt(x)}`)
-        }
-    }*/
-
-    //console.log(`Se detecto un + en la posicion: ${numArduino.indexOf('+')}`)
-    //espera a recibir un '+' para identificar que es un msn y compara con +CMT: para comprobarlo
-    
 
     /*
     if((numArduino.length < 50) && (sub_bufer === 1)){
@@ -170,21 +179,7 @@ mySerial.on("data", function (data) {
         //getMsn = 1
         parteAnterior = "undefined"
         console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>READY TO NEXT`)
-        
     }*/
-
-
-
-    /*
-    if((numArduino.length < 50) && (datoCliente === "+CMT:")){
-        console.log(`Nueva recarga en proceso ${datoCliente}`)
-        parteAnterior = numArduino
-        sub_bufer = 1
-        //console.log(`Primera parte de cadena: ${numArduino}`)
-      }*/
-
-    
-
 })//FIN DE RUTINA DE LECTURA DEL PUERTO SERIAL
 
 
