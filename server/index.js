@@ -10,7 +10,7 @@ let parteAnterior
 let sub_bufer //bandera para iniciar el proceso de recarga
 let numRecarga = []
 let datoCliente = ""
-let chargeNum, solicitaNum, fechaRecarga
+let chargeNum, solicitaNum, fechaRecarga, recargaEste
 let getMsn = 0 //bandera pa indicar que la siguinte informacion que se reciba es el texto del msn
 let modOk = 0//para llevar el conteo inicial de las veces que llegan datos
 let cadS9 = ""
@@ -95,7 +95,17 @@ function seccionar(datos) {
 }
 
 //funcion para buscar el numero a recargar 
-function targetNum(){
+function targetNum(parteTex){
+let num10 = true
+    for(let i=0; i<=(parteTex.lenth); i++){
+        if(!isNaN(parteTex.chartAt(i))){
+            for(let i2=i; i2<=(i+9); i2++ ){
+                if(!isNaN()){
+                    //me quede aqui
+                }
+            }
+        }
+    }
 
 }
 
@@ -114,7 +124,7 @@ function Seccionador(mensaje) {
 
     textFull = mensaje.substr((mensaje.indexOf('+') + 46), (mensaje.lenth))
     console.log(`Texto individual ${textFull}`)
-    targetNum(textFull)//me quede aqui
+    targetNum(textFull)
 
     console.log(`PROCESO TERMINADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
     
