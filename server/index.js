@@ -15,6 +15,9 @@ let getMsn = 0 //bandera pa indicar que la siguinte informacion que se reciba es
 let modOk = 0//para llevar el conteo inicial de las veces que llegan datos
 let cadS9 = ""
 let concatenandoMsn = 0
+let countRn = 0
+let finMsn = 0
+let textFull ="" //texto completo del msn recibido
 //mandar datos a arduino
 /*
 function enviaDato() {
@@ -91,6 +94,11 @@ function seccionar(datos) {
     console.log(`Numero a recargar: ${numARecargar}`)
 }
 
+//funcion para buscar el numero a recargar 
+function targetNum(){
+
+}
+
 //separa el mensaje en numero que solicita la recarga, numero al que se desea hacer la recarga, la
 //fecha de recarga, *tambien ponerle que verifique si si es un mensaje
 function Seccionador(mensaje) {
@@ -103,6 +111,10 @@ function Seccionador(mensaje) {
 
     chargeNum = mensaje.substr((mensaje.indexOf('+') + 46),10)
     console.log(`Número a recargar: ${chargeNum}`)
+
+    textFull = mensaje.substr((mensaje.indexOf('+') + 46), (mensaje.lenth))
+    console.log(`Texto individual ${textFull}`)
+    targetNum(textFull)//me quede aqui
 
     console.log(`PROCESO TERMINADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
     
@@ -136,13 +148,29 @@ mySerial.on("data", function (data) {
     if(concatenandoMsn == 1){
         datoCliente = datoCliente + numArduino
         //console.log(`tamaño cadena anterior: ${datoCliente.length}`)
-        if(datoCliente.length >= 58){
+
+        /*
+        chargeNum = mensaje.substr((mensaje.indexOf('+') + 46),10)
+        console.log(`Número a recargar: ${chargeNum}`)
+        if(datoCliente.indexOf("\u000A") >= 0){
+            console.log("ya entro al salto de linea")
+            countRn++
+            console.log(countRn)
+        }*/
+        if(datoCliente.indexOf('\u000A',(datoCliente.indexOf('+') + 46 )) >= 0 ){
+            console.log("posicion del ultimo saldo de liena")
+            console.log(datoCliente.indexOf('\u000A',(datoCliente.indexOf('+') + 46 )))
+            finMsn = 1
+        }
+        
+        if(finMsn === 1){
             
             console.log(`NUEVO MSN START PROCESS................................................`)
             console.log(`${datoCliente}`)
             Seccionador(datoCliente)
             concatenadoMsn=0
             datoCliente = ""
+            finMsn = 0
         }
     }
 
