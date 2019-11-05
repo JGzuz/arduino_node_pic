@@ -96,14 +96,19 @@ function seccionar(datos) {
 
 //funcion para buscar el numero a recargar 
 function targetNum(parteTex){
-let num10 = true
+let num10 = false
+let postInit
+let postEnd
     for(let i=0; i<=(parteTex.lenth); i++){
         if(!isNaN(parteTex.chartAt(i))){
             for(let i2=i; i2<=(i+9); i2++ ){
-                if(!isNaN()){
-                    //me quede aqui
+                if(isNaN(parteTex.chartAt(i2))){//si el caracter no es un numero
+                    num10 = true
                 }
             }
+        }
+        if(isNaN(parteTex.chartAt(i+10))){//si no es un numero en la posicion 1 + 10
+            postEnd = i+9
         }
     }
 
