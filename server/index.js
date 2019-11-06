@@ -103,7 +103,6 @@ let posInit = 0, posEnd = 0 //para determinar la subcadena con el numero de 10 d
 let esNumero = false
 let numFound //el numero de 10 digitos en el formato correcto
 let aislarNum = ""
-
     console.log("buscando numero...")
     console.log(isNaN("4R5"))
     console.log(isNaN("R"))
@@ -112,10 +111,8 @@ let aislarNum = ""
     console.log(isNaN("234 345"))
     console.log(isNaN("5"))
     console.log(isNaN(" "))
-    
     for(let posAct=0; posAct <= (parteTex.length)-3; posAct++ )
     {
-        
         //segmento de 10 digitos detectados
         if((parteTex.charAt(posAct) != " ") && (!isNaN(parteTex.charAt(posAct)))){
             console.log(`posicion ${posAct}: ${parteTex.charAt(posAct)}`)
@@ -123,10 +120,7 @@ let aislarNum = ""
                 if(!isNaN(aislarNum)){
                     console.log(`numero: ${aislarNum}`)
                 }
-            
         }//fin de detectar segmento de 10 digitos
-        
-
     }
 
 }//fin de funcion de encontrar un numero en el formato adecuado: 10 digitos solos

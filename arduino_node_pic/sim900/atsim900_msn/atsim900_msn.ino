@@ -18,9 +18,6 @@ void setup() {
   delay(100);
   sim900.println("AT+CNMI=1,2,0,0,0\r");
   delay(100);
-
-  
-  
 }
 
 void loop() {
@@ -33,4 +30,7 @@ void loop() {
       datosPc = Serial.readString();
       sim900.print(datosPc);
     }
+
+  //verificar datos del puerto serie por hardware, pc a arduino
+  
 }
