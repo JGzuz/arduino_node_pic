@@ -96,23 +96,40 @@ function seccionar(datos) {
 
 //funcion para buscar el numero a recargar 
 function targetNum(parteTex){
-let num10 = false
-let postInit
-let postEnd
-    for(let i=0; i<=(parteTex.lenth); i++){
-        if(!isNaN(parteTex.chartAt(i))){
-            for(let i2=i; i2<=(i+9); i2++ ){
-                if(isNaN(parteTex.chartAt(i2))){//si el caracter no es un numero
-                    num10 = true
+
+let num10Dig = false //para validar que sea un numero de 10 digitos
+let numPos11 = false //para validar que el numero no sea de mas de 10 digitos
+let posInit = 0, posEnd = 0 //para determinar la subcadena con el numero de 10 digitos 
+let esNumero = false
+let numFound //el numero de 10 digitos en el formato correcto
+let aislarNum = ""
+
+    console.log("buscando numero...")
+    console.log(isNaN("4R5"))
+    console.log(isNaN("R"))
+    console.log(isNaN("455 "))
+    console.log(isNaN(" 455"))
+    console.log(isNaN("234 345"))
+    console.log(isNaN("5"))
+    console.log(isNaN(" "))
+    
+    for(let posAct=0; posAct <= (parteTex.length)-3; posAct++ )
+    {
+        
+        //segmento de 10 digitos detectados
+        if((parteTex.charAt(posAct) != " ") && (!isNaN(parteTex.charAt(posAct)))){
+            console.log(`posicion ${posAct}: ${parteTex.charAt(posAct)}`)
+            aislarNum = parteTex.substr(posAct,posAct+9)
+                if(!isNaN(aislarNum)){
+                    console.log(`numero: ${aislarNum}`)
                 }
-            }
-        }
-        if(isNaN(parteTex.chartAt(i+10))){//si no es un numero en la posicion 1 + 10
-            postEnd = i+9
-        }
+            
+        }//fin de detectar segmento de 10 digitos
+        
+
     }
 
-}
+}//fin de funcion de encontrar un numero en el formato adecuado: 10 digitos solos
 
 //separa el mensaje en numero que solicita la recarga, numero al que se desea hacer la recarga, la
 //fecha de recarga, *tambien ponerle que verifique si si es un mensaje
@@ -127,9 +144,10 @@ function Seccionador(mensaje) {
     chargeNum = mensaje.substr((mensaje.indexOf('+') + 46),10)
     console.log(`Número a recargar: ${chargeNum}`)
 
+    /*
     textFull = mensaje.substr((mensaje.indexOf('+') + 46), (mensaje.lenth))
     console.log(`Texto individual ${textFull}`)
-    targetNum(textFull)
+    targetNum(textFull)*/
 
     console.log(`PROCESO TERMINADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
     
