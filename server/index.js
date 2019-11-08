@@ -12,7 +12,7 @@ let numRecarga = []
 let datoCliente = ""
 let chargeNum, solicitaNum, fechaRecarga, recargaEste
 let getMsn = 0 //bandera pa indicar que la siguinte informacion que se reciba es el texto del msn
-let modOk = 0//para llevar el conteo inicial de las veces que llegan datos
+let modOk = 0//cuando es igual a 1, el modulo esta inicializado
 let cadS9 = ""
 let concatenandoMsn = 0
 let countRn = 0
@@ -193,16 +193,29 @@ mySerial.on("data", function (data) {
     //acumulamos en una cadena todo lo que vaya llegando por el puerto serie
     if(concatenandoMsn == 0){
         cadS9 = cadS9 + numArduino
+        /*
+        if((cadS9.indexOf('\u000A') && (modOk === 1))){
+            console.log(`Nueva cadenas en serie: ${cadS9}`)
+            cadS9 = "";
+        }*/
        // console.log(`Esto hay en el buffer ahora: ${cadS9}`) para ver lo acumulado en la cadena
     }
 
     //para verificar cuando el modulo se haya inicializado
-    if(cadS9.indexOf("AT+CMGF=") >= 0){
+    if(cadS9.indexOf("CMGF=") >= 0){
         setTimeout(()=>{
             console.log(`MODULO INICIALIZADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
         },1000)
         cadS9 = ""//limpiamos la cadena para que no entre constantamente aqui
+        modOk = 1 // el modulo esta inicializado
     }
+
+
+    /*
+    //una vez que el modulo este inicializado (modOk == 1)
+    if((cadS9.indexOf('+')>=0) && (modOk === 1) && (concatenandoMsn === 0)){
+        cadS9 = cadS9 
+    }*/
 
     //dejamos de acumular en la cadena cadS9 y acumulamos en una cadana nueva, donde se almacenara 
     //el msn entero
@@ -233,7 +246,7 @@ mySerial.on("data", function (data) {
             datoCliente = ""
             finMsn = 0
         }
-    }
+    }//fin rutina de alcenar msn entero
 
     //espera a recibir un '+CMT:' para identificar que es un SMS 
     if(cadS9.indexOf("+CMT:") >= 0){
@@ -246,29 +259,6 @@ mySerial.on("data", function (data) {
         datoCliente = cadS9.substr(cadS9.indexOf('+CMT:'),cadS9.length)
         console.log(datoCliente)*/
     }
-
-    /*
-    if((numArduino.length < 50) && (sub_bufer === 1)){
-        numArduino = parteAnterior + data.toString()
-        //console.log(`Nueva cadena concatenada: ${numArduino}`) descomentar para ver la cadena completa
-        //console.log(`Nuevo tamaño: ${numArduino.length}`)
-        clienteNum = numArduino.substr(((numArduino.indexOf('+'))+7),10)
-        fechaRecarga = numArduino.substr(((numArduino.indexOf('+'))+23),20)
-        chargeNum = numArduino.substr(((numArduino.indexOf('+'))+46), 10)
-        console.log(`Numero que solicita: ${clienteNum}`)
-        //console.log(`Tamaño de numero que solicita: ${clienteNum.length}`)
-
-        console.log(`fecha de solicitud: ${fechaRecarga}`)
-        //console.log(`Tamaño de la fecha: ${fechaRecarga.length}`)
-
-        console.log(`Numero a recargar: ${chargeNum}`)
-        //console.log(`Tamaño de numero a recargar: ${chargeNum.length}`)
-        
-        sub_bufer = 0
-        //getMsn = 1
-        parteAnterior = "undefined"
-        console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>READY TO NEXT`)
-    }*/
 })//FIN DE RUTINA DE LECTURA DEL PUERTO SERIAL
 
 

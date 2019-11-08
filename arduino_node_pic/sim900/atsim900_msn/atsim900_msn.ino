@@ -45,8 +45,9 @@ void loop() {
   if(datosPc == "RECARGA_OK"){
       digitalWrite(led2, HIGH);
       delay(1000);
+      /*
       sim900.print("AT+GSN\r");
-      sim900.print("\r");
+      sim900.print("\r");*/
       digitalWrite(led2, LOW);
       datosPc = "";
     }
@@ -54,8 +55,9 @@ void loop() {
   if(datosPc == "sf_send_msn"){
       digitalWrite(led3,HIGH);
       delay(1000);
-      sim900.print("AT+ATI\r");
-      digitalWrite(led3, LOW);
+      /*
+      sim900.print("ATI\r");
+      digitalWrite(led3, LOW);*/
       datosPc = "";
     }
 
@@ -63,8 +65,9 @@ void loop() {
    if(datosPc == "sf_sin_msn"){
       digitalWrite(led4,HIGH);
       delay(1000);
+      /*
       sim900.print("AT+GMI\r");
-      digitalWrite(led4,LOW);
+      digitalWrite(led4,LOW);*/
       datosPc = "";
     }
    
