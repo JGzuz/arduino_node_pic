@@ -31,7 +31,6 @@ void loop() {
   if (sim900.available()){
       datosSim = sim900.readString();
       Serial.print(datosSim);
-      
     }
   if (Serial.available()){
       datosPc = Serial.readStringUntil('\n');
