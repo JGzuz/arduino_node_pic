@@ -17,7 +17,8 @@ let cadS9 = ""
 let concatenandoMsn = 0
 let countRn = 0
 let finMsn = 0
-let textFull ="" //texto completo del msn recibido
+let textFull ="" //texto completo recibido por serie
+let msnFull =""//para del msn completa, sin los datos de fecha y quien envia
 //mandar datos a arduino
 /*
 function enviaDato() {
@@ -47,11 +48,28 @@ function cadenas() {
     },15000)
 }
 
-function enviaMsn() {
+function RecargaOk() {
     setTimeout(()=>{
-        mySerial.write('MSN_ENVIADO')
+        mySerial.write('RECARGA_OK')
     }, 500)
 }
+
+function formatoIncorrecto(longMensaje) {
+    if(longMensaje.length <= 20){
+        setTimeout(() => {
+            mySerial.write("sf_send_msn")//sin formato, enviar msn al cliente
+        }, 500)
+    }
+
+    if(longMensaje.length > 20){
+        setTimeout(() => {
+            mySerial.write("sf_sin_msn")
+        }, 500)
+    }
+    
+}
+
+
 
 //evento comunicacion serial arbierta
 mySerial.on("open", function() {
@@ -60,7 +78,7 @@ mySerial.on("open", function() {
 })
 
 //filtra el numero para comprovar si esta en basesita
-async function recargaNum(numArduino) {
+async function recargaNum(param1) {
     return new Promise((resolve, reject)=>{
         setTimeout(()=>{
             resolve(numOK2 = clientes.filter(verificaNumero))
@@ -70,19 +88,18 @@ async function recargaNum(numArduino) {
 
 //funcion para verificar si el numero esta en la base de datos
 function verificaNumero(cliente) {//numArduino =>
-    if(cliente.numero === parseInt(numArduino)){
-        console.log(`Se encontro una coincidencia: ${cliente.numero} == ${numArduino}`)
-        enviaMsn()
+    if(cliente.numero === parseInt(chargeNum)){
+        console.log(`Se encontro una coincidencia: ${cliente.numero} == ${chargeNum}`)
+        RecargaOk()
         setTimeout(()=>{
-            console.log(`El numero ${numArduino}se ha recargado exitosamente`)
-        },2000)
+            console.log(`El numero ${chargeNum} se ha recargado exitosamente`)
+        },1000)
 
-        numeroArduino = ""
+        //numeroArduino = ""
         
         console.log("------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-        
-        return true
     }
+    
 }
 
 function seccionar(datos) {
@@ -136,13 +153,30 @@ function Seccionador(mensaje) {
     console.log(`Número que solicita: ${solicitaNum}`)
 
     chargeNum = mensaje.substr((mensaje.indexOf('+') + 46),10)
+    console.log(`tamaño número ${chargeNum.length}`)
     console.log(`Número a recargar: ${chargeNum}`)
+
+    msnFull = mensaje.substr((mensaje.indexOf('+') + 46),(mensaje.length))
+
+    //verifica que sea un numero de 10 digitos, si los es procede al proceso de recarga
+    if(!isNaN(chargeNum) && (chargeNum.length == 10)){//si es un numero 
+        recargaNum(chargeNum)
+    }
+
+    if(isNaN(chargeNum)){//cuando no es un numero o no esta en el formato correcto
+        //aqui necesito agregarle la condicion que solo lo mande cuando el tamaño del msn
+        //no excede cierto tamaño
+        console.log("Formato incorrecto de numero, solo envie un numero de 10 digitos")
+        console.log("sin espacios ni caracteres especiales")
+        formatoIncorrecto(msnFull)
+    }
+    
 
     /*
     textFull = mensaje.substr((mensaje.indexOf('+') + 46), (mensaje.lenth))
     console.log(`Texto individual ${textFull}`)
     targetNum(textFull)*/
-
+    //mySerial.write('AT+GSN')
     console.log(`PROCESO TERMINADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
     
 }
@@ -248,7 +282,7 @@ mySerial.on("err", function(err) {
 //basesita de datos falsos uwuwuwuw
 var cliente1 = {
     nombre: "Juan",
-    numero: 1111111111,
+    numero: 4443332211,
     id: "00000asdf1",
     activo: true,
     edad: 22
@@ -259,12 +293,12 @@ const cliente2 = {
     id: "00000asdf1",
     activo: true,
     edad: 32,
-    numero: 1000000020
+    numero: 4661071837
 }
 
 const cliente3 = {
     nombre: "Luisa",
-    numero: 1000000030,
+    numero: 5552221144,
     id: "00000asdf1",
     activo: true,
     edad: 28
@@ -272,7 +306,7 @@ const cliente3 = {
 
 const cliente4 = {
     nombre: "Brayan",
-    numero: 1000000040,
+    numero: 7776662233,
     id: "00000asdf1",
     activo: true,
     edad: 59
@@ -280,7 +314,7 @@ const cliente4 = {
 
 const cliente5 = {
     nombre: "Steve",
-    numero: 1000000050,
+    numero: 8885552233,
     id: "00000asdf1",
     activo: true,
     edad: 30
@@ -288,7 +322,7 @@ const cliente5 = {
 
 const cliente6 = {
     nombre: "persona6",
-    numero: 1000000060,
+    numero: 7779992211,
     id: "00000asdf1",
     activo: true,
     edad: 30
@@ -296,7 +330,7 @@ const cliente6 = {
 
 const cliente7 = {
     nombre: "persona6",
-    numero: 1000000070,
+    numero: 9879874473,
     id: "00000asdf1",
     activo: true,
     edad: 30
