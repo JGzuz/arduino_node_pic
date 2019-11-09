@@ -14,7 +14,7 @@ let chargeNum, solicitaNum, fechaRecarga, recargaEste
 let getMsn = 0 //bandera pa indicar que la siguinte informacion que se reciba es el texto del msn
 let modOk = 0, initSim900 = 0// si initSim900=1 => modulo inicializado, si modOk=1 => cadena aux guarda msn 
 let cadS9 = ""
-let esperaMod = ""
+let esperaMod = ""//cadena donde se almacena inicialmente durante la inicializacion del modulo
 let concatenandoMsn = 0
 let countRn = 0
 let finMsn = 0
