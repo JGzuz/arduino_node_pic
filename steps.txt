@@ -367,3 +367,87 @@ mySerial.on("data", function (data) {
             //numRecarga.splice(0,numRecarga.length)//para eliminar un elemneto de array
     /*}*///Ca descomnetar aqui°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
 })//FIN DE RUTINA DE LECTURA DEL PUERTO SERIAL
+
+
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+//escucha datos en buffer
+mySerial.on("data", function (data) {
+    console.log(`Nuevo dato recibido: ${data.toString()}`)//descomentar para ver el dato recibido
+    //console.log(`Tamaño: ${numArduino.length}`)
+
+    numArduino = data.toString()//guardamos en una variable lo que se recibio por el puerto serie
+
+    //acumulamos en una cadena todo lo que vaya llegando por el puerto serie
+    if(concatenandoMsn == 0){
+        cadS9 = cadS9 + numArduino
+        /*
+        if((cadS9.indexOf('\u000A') && (modOk === 1))){
+            console.log(`Nueva cadenas en serie: ${cadS9}`)
+            cadS9 = "";
+        }*/
+       // console.log(`Esto hay en el buffer ahora: ${cadS9}`) para ver lo acumulado en la cadena
+    }
+
+    //para verificar cuando el modulo se haya inicializado
+    if(cadS9.indexOf("CMGF=") >= 0){
+        setTimeout(()=>{
+            console.log(`MODULO INICIALIZADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
+        },1000)
+        cadS9 = ""//limpiamos la cadena para que no entre constantamente aqui
+        modOk = 1 // el modulo esta inicializado
+    }
+
+    /*
+    //una vez que el modulo este inicializado (modOk == 1)
+    if((cadS9.indexOf('+')>=0) && (modOk === 1) && (concatenandoMsn === 0)){
+        cadS9 = cadS9 
+    }*/
+
+    //dejamos de acumular en la cadena cadS9 y acumulamos en una cadana nueva, donde se almacenara 
+    //el msn entero
+    if(concatenandoMsn == 1){
+        datoCliente = datoCliente + numArduino
+        //console.log(`tamaño cadena anterior: ${datoCliente.length}`)
+
+        /*
+        chargeNum = mensaje.substr((mensaje.indexOf('+') + 46),10)
+        console.log(`Número a recargar: ${chargeNum}`)
+        if(datoCliente.indexOf("\u000A") >= 0){
+            console.log("ya entro al salto de linea")
+            countRn++
+            console.log(countRn)
+        }*/
+        if(datoCliente.indexOf('\u000A',(datoCliente.indexOf('+') + 46 )) >= 0 ){
+            console.log("posicion del ultimo saldo de liena")
+            console.log(datoCliente.indexOf('\u000A',(datoCliente.indexOf('+') + 46 )))
+            finMsn = 1
+        }
+        
+        if(finMsn === 1){
+            
+            console.log(`NUEVO MSN START PROCESS................................................`)
+            console.log(`${datoCliente}`)
+            Seccionador(datoCliente)
+            concatenadoMsn=0
+            datoCliente = ""
+            finMsn = 0
+        }
+    }//fin rutina de alcenar msn entero
+
+    //espera a recibir un '+CMT:' para identificar que es un SMS 
+    if(cadS9.indexOf("+CMT:") >= 0){
+        //console.log(cadS9.indexOf("+CMT:")) para ver cuando llega un nuevo sms
+        concatenandoMsn = 1
+        datoCliente = cadS9.substr(cadS9.indexOf('+CMT:'),cadS9.lenth)
+        //console.log(`Esto pasa a datosCliente: ${datoCliente}`)
+        cadS9 = ""
+        /*
+        datoCliente = cadS9.substr(cadS9.indexOf('+CMT:'),cadS9.length)
+        console.log(datoCliente)*/
+    }
+})//FIN DE RUTINA DE LECTURA DEL PUERTO SERIAL
+
+
+1: Separar la cadena que almacena continuamente los caracteres recibidos por el puerto serie en dos, una para almacenar hasta que se inicialice el modulo y la otra para almacenar la cadena hasta que se tenga una cadena completa hasta que se complete. 

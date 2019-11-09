@@ -35,18 +35,18 @@ void loop() {
   if (Serial.available()){
       datosPc = Serial.readStringUntil('\n');
       //sim900.print("AT\r");
-      /*
+      
       sim900.print(datosPc);
-      sim900.print("\r");*/
+      sim900.print("\r");
     }
 
 //simula recarga realizada correctamente
   if(datosPc == "RECARGA_OK"){
       digitalWrite(led2, HIGH);
       delay(1000);
-      /*
+      
       sim900.print("AT+GSN\r");
-      sim900.print("\r");*/
+      sim900.print("\r");
       digitalWrite(led2, LOW);
       datosPc = "";
     }
@@ -54,9 +54,9 @@ void loop() {
   if(datosPc == "sf_send_msn"){
       digitalWrite(led3,HIGH);
       delay(1000);
-      /*
+      
       sim900.print("ATI\r");
-      digitalWrite(led3, LOW);*/
+      digitalWrite(led3, LOW);
       datosPc = "";
     }
 
@@ -64,9 +64,9 @@ void loop() {
    if(datosPc == "sf_sin_msn"){
       digitalWrite(led4,HIGH);
       delay(1000);
-      /*
+      
       sim900.print("AT+GMI\r");
-      digitalWrite(led4,LOW);*/
+      digitalWrite(led4,LOW);
       datosPc = "";
     }
    

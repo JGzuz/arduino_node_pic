@@ -12,8 +12,9 @@ let numRecarga = []
 let datoCliente = ""
 let chargeNum, solicitaNum, fechaRecarga, recargaEste
 let getMsn = 0 //bandera pa indicar que la siguinte informacion que se reciba es el texto del msn
-let modOk = 0//cuando es igual a 1, el modulo esta inicializado
+let modOk = 0, initSim900 = 0// si initSim900=1 => modulo inicializado, si modOk=1 => cadena aux guarda msn 
 let cadS9 = ""
+let esperaMod = ""
 let concatenandoMsn = 0
 let countRn = 0
 let finMsn = 0
@@ -190,6 +191,12 @@ mySerial.on("data", function (data) {
 
     numArduino = data.toString()//guardamos en una variable lo que se recibio por el puerto serie
 
+    //cadena donde se almacena inicial todo lo que llega por el puerto serie hasta que se inicializa
+    //el modulo sim900
+    if(initSim900 === 0){
+
+    }
+    
     //acumulamos en una cadena todo lo que vaya llegando por el puerto serie
     if(concatenandoMsn == 0){
         cadS9 = cadS9 + numArduino
