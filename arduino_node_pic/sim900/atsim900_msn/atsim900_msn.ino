@@ -11,7 +11,7 @@ void setup() {
   Serial.begin(19200);
   sim900.begin(19200);
 
-  sim900.print("A");
+  sim900.print("A\r");
   delay(500);
   sim900.print("AT\r");
   delay(200);
@@ -31,6 +31,7 @@ void loop() {
   if (sim900.available()){
       datosSim = sim900.readString();
       Serial.print(datosSim);
+      
     }
   if (Serial.available()){
       datosPc = Serial.readStringUntil('\n');

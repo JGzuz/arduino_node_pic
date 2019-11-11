@@ -154,7 +154,7 @@ function Seccionador(mensaje) {
     console.log(`Número que solicita: ${solicitaNum}`)
 
     chargeNum = mensaje.substr((mensaje.indexOf('+') + 46),10)
-    console.log(`tamaño número ${chargeNum.length}`)
+    //console.log(`tamaño número ${chargeNum.length}`)
     console.log(`Número a recargar: ${chargeNum}`)
 
     msnFull = mensaje.substr((mensaje.indexOf('+') + 46),(mensaje.length))
@@ -182,8 +182,6 @@ function Seccionador(mensaje) {
     
 }
 
-
-
 //escucha datos en buffer
 mySerial.on("data", function (data) {
     console.log(`Nuevo dato recibido: ${data.toString()}`)//descomentar para ver el dato recibido
@@ -191,12 +189,6 @@ mySerial.on("data", function (data) {
 
     numArduino = data.toString()//guardamos en una variable lo que se recibio por el puerto serie
 
-    //cadena donde se almacena inicial todo lo que llega por el puerto serie hasta que se inicializa
-    //el modulo sim900
-    if(initSim900 === 0){
-
-    }
-    
     //acumulamos en una cadena todo lo que vaya llegando por el puerto serie
     if(concatenandoMsn == 0){
         cadS9 = cadS9 + numArduino
@@ -205,7 +197,7 @@ mySerial.on("data", function (data) {
             console.log(`Nueva cadenas en serie: ${cadS9}`)
             cadS9 = "";
         }*/
-       // console.log(`Esto hay en el buffer ahora: ${cadS9}`) para ver lo acumulado en la cadena
+       console.log(`Esto hay en el buffer ahora: ${cadS9}`) //para ver lo acumulado en la cadena
     }
 
     //para verificar cuando el modulo se haya inicializado
@@ -216,7 +208,6 @@ mySerial.on("data", function (data) {
         cadS9 = ""//limpiamos la cadena para que no entre constantamente aqui
         modOk = 1 // el modulo esta inicializado
     }
-
 
     /*
     //una vez que el modulo este inicializado (modOk == 1)
@@ -257,7 +248,7 @@ mySerial.on("data", function (data) {
 
     //espera a recibir un '+CMT:' para identificar que es un SMS 
     if(cadS9.indexOf("+CMT:") >= 0){
-        //console.log(cadS9.indexOf("+CMT:")) para ver cuando llega un nuevo sms
+        console.log(cadS9.indexOf("+CMT:")) //para ver cuando llega un nuevo sms
         concatenandoMsn = 1
         datoCliente = cadS9.substr(cadS9.indexOf('+CMT:'),cadS9.lenth)
         //console.log(`Esto pasa a datosCliente: ${datoCliente}`)
@@ -267,7 +258,6 @@ mySerial.on("data", function (data) {
         console.log(datoCliente)*/
     }
 })//FIN DE RUTINA DE LECTURA DEL PUERTO SERIAL
-
 
 //evento de error
 mySerial.on("err", function(err) {
