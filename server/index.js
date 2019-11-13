@@ -20,6 +20,7 @@ let countRn = 0
 let finMsn = 0
 let textFull ="" //texto completo recibido por serie
 let msnFull =""//para del msn completa, sin los datos de fecha y quien envia
+let arrayPos = 0 //variable incremental para ver la posicion en que nos encontramos del array de clientes
 //mandar datos a arduino
 /*
 function enviaDato() {
@@ -55,10 +56,13 @@ function RecargaOk() {
     }, 500)
 }
 
-function formatoIncorrecto(longMensaje) {
+function formatoIncorrecto(longMensaje, sendToNumber) {
     if(longMensaje.length <= 20){
         setTimeout(() => {
-            mySerial.write("sf_send_msn")//sin formato, enviar msn al cliente
+            //msn cuando el numero no viene en el formato correcto
+            sendToNumber = ("RS" + sendToNumber + " 4")
+            mySerial.write(sendToNumber)//sin formato, enviar msn al cliente
+            sendToNumber = ""
         }, 500)
     }
 
@@ -80,6 +84,7 @@ mySerial.on("open", function() {
 
 //filtra el numero para comprovar si esta en basesita
 async function recargaNum(param1) {
+    arrayPos = 0
     return new Promise((resolve, reject)=>{
         setTimeout(()=>{
             resolve(numOK2 = clientes.filter(verificaNumero))
@@ -87,18 +92,27 @@ async function recargaNum(param1) {
     })
 }
 
+
 //funcion para verificar si el numero esta en la base de datos
 function verificaNumero(cliente) {//numArduino =>
+    
     if(cliente.numero === parseInt(chargeNum)){
         console.log(`Se encontro una coincidencia: ${cliente.numero} == ${chargeNum}`)
         RecargaOk()
         setTimeout(()=>{
             console.log(`El numero ${chargeNum} se ha recargado exitosamente`)
-            console.log("------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>END`)
         },1000)
     }
-    
+    else{
+        arrayPos++
+        if(arrayPos == clientes.length){
+            console.log("El numero no se encontro en la base de datos")
+            console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>END`)
+        }
+    }
 }
+
 
 function seccionar(datos) {
     let numDeCliente
@@ -161,12 +175,13 @@ function Seccionador(mensaje) {
         recargaNum(chargeNum)
     }
 
-    if(isNaN(chargeNum)){//cuando no es un numero o no esta en el formato correcto
+    if(isNaN(chargeNum) || chargeNum.length < 10){//cuando no es un numero o no esta en el formato correcto
         //aqui necesito agregarle la condicion que solo lo mande cuando el tamaño del msn
         //no excede cierto tamaño
         console.log("Formato incorrecto de numero, solo envie un numero de 10 digitos")
         console.log("sin espacios ni otro tipo de caracteres")
-        formatoIncorrecto(msnFull)
+        console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>END`)
+        formatoIncorrecto(msnFull, solicitaNum)
     }
     
 
@@ -219,7 +234,7 @@ mySerial.on("data", function (data) {
             console.log(countRn)
         }*/
         if(datoCliente.indexOf('\u000A',(datoCliente.indexOf('+') + 46 )) >= 0 ){
-            console.log("posicion del ultimo saldo de liena")
+            //console.log("posicion del ultimo saldo de liena")
             console.log(datoCliente.indexOf('\u000A',(datoCliente.indexOf('+') + 46 )))
             finMsn = 1
         }
@@ -241,7 +256,7 @@ mySerial.on("data", function (data) {
         if(cadenaSec.indexOf("+CMT:") >=0 ){//si encuntras este segemento en la dacadena
             concatenandoMsn = 1 //para iniciar a guardar lo que llega
             datoCliente = cadenaSec.substr(cadenaSec.indexOf('+CMT:'),cadenaSec.lenth)//almacenamos a partir de +CMT: hata el tamaño total
-            console.log(`Esto pasó a datosCliente: ${datoCliente}`)
+            //console.log(`Esto pasó a datosCliente: ${datoCliente}`)
             cadenaSec = ""
         }
     }

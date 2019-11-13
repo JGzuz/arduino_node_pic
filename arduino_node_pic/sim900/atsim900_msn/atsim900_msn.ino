@@ -7,6 +7,10 @@ const int led2 = 2;
 const int led3 = 3; 
 const int led4 = 4;
 
+//para envio del msn
+const int led5 = 5;//led5 indicador de que se envia el msn
+const int push6 = 6;//push boton para enviar msn
+
 void setup() {
   Serial.begin(19200);
   sim900.begin(19200);
@@ -25,7 +29,30 @@ void setup() {
   pinMode(led2, OUTPUT);//indicador pata verificar que los datos se reciban correctamente del puerto serial-pc
   pinMode(led3, OUTPUT);//RECARGA FALLIDA FORMATO INCORRECTO 
   pinMode(led4, OUTPUT);//MENSAJE EXCEDE TAMAÑO PERMITIDO PARA RESPONDER AL MSN
+  pinMode(led5, OUTPUT);//led indicador de envio de msn
+  pinMode(push6, INPUT);//PUSH PARA ENVIAR MSN 
 }
+
+//msn de saludo
+void enviarMensaje() {
+    Serial.println("Enviando SMS...");
+    /*
+    sim900.print("AT+CMGF=1\r");
+    delay(200);
+    */
+    sim900.println("AT+CMGS=\"4661016976\"");
+    delay(500);
+    sim900.println("Su numero se ha recargado exitosamente");//texto del sms
+    delay(100);
+    sim900.println((char)26);//comando de finilizacion 
+    delay(100);
+    sim900.println();
+    delay(2000);
+    Serial.println("SMS enviado");
+  }
+
+//msn formato incorrecto
+
 
 void loop() {
   if (sim900.available()){
@@ -72,6 +99,12 @@ void loop() {
     }
    
   
-  //verificar datos del puerto serie por hardware, pc a arduino
+  //prueba el envio de sms
+  if(digitalRead(push6)==1){
+      delay(20);
+      enviarMensaje();
+    }
+
+   //llamado de funcion de formato incorrecto
   
 }
