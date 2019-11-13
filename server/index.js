@@ -14,7 +14,7 @@ let chargeNum, solicitaNum, fechaRecarga, recargaEste
 let getMsn = 0 //bandera pa indicar que la siguinte informacion que se reciba es el texto del msn
 let modOk = 0, initSim900 = 0// si initSim900=1 => modulo inicializado, si modOk=1 => cadena aux guarda msn 
 let cadS9 = ""
-let esperaMod = ""//cadena donde se almacena inicialmente durante la inicializacion del modulo
+let cadenaSec = ""//cadena que almacena una vez inicializado el nodulo
 let concatenandoMsn = 0
 let countRn = 0
 let finMsn = 0
@@ -83,7 +83,7 @@ async function recargaNum(param1) {
     return new Promise((resolve, reject)=>{
         setTimeout(()=>{
             resolve(numOK2 = clientes.filter(verificaNumero))
-        },3000)
+        },1000)
     })
 }
 
@@ -94,11 +94,8 @@ function verificaNumero(cliente) {//numArduino =>
         RecargaOk()
         setTimeout(()=>{
             console.log(`El numero ${chargeNum} se ha recargado exitosamente`)
+            console.log("------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         },1000)
-
-        //numeroArduino = ""
-        
-        console.log("------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
     }
     
 }
@@ -168,7 +165,7 @@ function Seccionador(mensaje) {
         //aqui necesito agregarle la condicion que solo lo mande cuando el tamaño del msn
         //no excede cierto tamaño
         console.log("Formato incorrecto de numero, solo envie un numero de 10 digitos")
-        console.log("sin espacios ni caracteres especiales")
+        console.log("sin espacios ni otro tipo de caracteres")
         formatoIncorrecto(msnFull)
     }
     
@@ -178,47 +175,39 @@ function Seccionador(mensaje) {
     console.log(`Texto individual ${textFull}`)
     targetNum(textFull)*/
     //mySerial.write('AT+GSN')
-    console.log(`PROCESO TERMINADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
+    
     
 }
 
 //escucha datos en buffer
 mySerial.on("data", function (data) {
-    console.log(`Nuevo dato recibido: ${data.toString()}`)//descomentar para ver el dato recibido
+    //console.log(`Nuevo dato recibido: ${data.toString()}`)//descomentar para ver el dato recibido
     //console.log(`Tamaño: ${numArduino.length}`)
 
     numArduino = data.toString()//guardamos en una variable lo que se recibio por el puerto serie
+    //console.log(`Acumulado en la cadena: ${cadS9}`)
+    //console.log(`Acumulado en datocliente: ${datoCliente}`)
 
-    //acumulamos en una cadena todo lo que vaya llegando por el puerto serie
-    if(concatenandoMsn == 0){
+    //acumula en cadena para comprobar inicializacion del modulo
+    if(initSim900 == 0){//si el modulo sim900 no ha inicializado
         cadS9 = cadS9 + numArduino
-        /*
-        if((cadS9.indexOf('\u000A') && (modOk === 1))){
-            console.log(`Nueva cadenas en serie: ${cadS9}`)
-            cadS9 = "";
-        }*/
-       console.log(`Esto hay en el buffer ahora: ${cadS9}`) //para ver lo acumulado en la cadena
+        //console.log(`Esto hay en el buffer ahora: ${cadS9}`) //para ver lo acumulado en la cadena
+
+            //para verificar cuando el modulo se haya inicializado
+             if(cadS9.indexOf("CMGF=") >= 0){
+                setTimeout(()=>{
+                console.log(`MODULO INICIALIZADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
+                },1000)
+                cadS9 = ""//limpiamos la cadena para que no entre constantamente aqui
+                initSim900 = 1 // el modulo se ha inicializado
+             }   
     }
 
-    //para verificar cuando el modulo se haya inicializado
-    if(cadS9.indexOf("CMGF=") >= 0){
-        setTimeout(()=>{
-            console.log(`MODULO INICIALIZADO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OK`)
-        },1000)
-        cadS9 = ""//limpiamos la cadena para que no entre constantamente aqui
-        modOk = 1 // el modulo esta inicializado
-    }
-
-    /*
-    //una vez que el modulo este inicializado (modOk == 1)
-    if((cadS9.indexOf('+')>=0) && (modOk === 1) && (concatenandoMsn === 0)){
-        cadS9 = cadS9 
-    }*/
-
-    //dejamos de acumular en la cadena cadS9 y acumulamos en una cadana nueva, donde se almacenara 
+    //almacena datos de puerto serie, esta cadena ya almacena un msn recidibo
     //el msn entero
     if(concatenandoMsn == 1){
         datoCliente = datoCliente + numArduino
+        //console.log(`Esto tiene datoCliente: ${datoCliente}`)
         //console.log(`tamaño cadena anterior: ${datoCliente.length}`)
 
         /*
@@ -240,23 +229,35 @@ mySerial.on("data", function (data) {
             console.log(`NUEVO MSN START PROCESS................................................`)
             console.log(`${datoCliente}`)
             Seccionador(datoCliente)
-            concatenadoMsn=0
+            concatenandoMsn=0
             datoCliente = ""
             finMsn = 0
         }
-    }//fin rutina de alcenar msn entero
+    }//fin rutina de almacenar msn entero
+
+    //cadena que almacena una vez inicializado el modulo
+    if((initSim900 == 1) && (concatenandoMsn == 0)){
+        cadenaSec = cadenaSec + numArduino //almacena los datos que llegan por serie en esta cadena
+        if(cadenaSec.indexOf("+CMT:") >=0 ){//si encuntras este segemento en la dacadena
+            concatenandoMsn = 1 //para iniciar a guardar lo que llega
+            datoCliente = cadenaSec.substr(cadenaSec.indexOf('+CMT:'),cadenaSec.lenth)//almacenamos a partir de +CMT: hata el tamaño total
+            console.log(`Esto pasó a datosCliente: ${datoCliente}`)
+            cadenaSec = ""
+        }
+    }
 
     //espera a recibir un '+CMT:' para identificar que es un SMS 
-    if(cadS9.indexOf("+CMT:") >= 0){
+    if(cadS9.indexOf("+CMT:123") >= 0){
         console.log(cadS9.indexOf("+CMT:")) //para ver cuando llega un nuevo sms
         concatenandoMsn = 1
         datoCliente = cadS9.substr(cadS9.indexOf('+CMT:'),cadS9.lenth)
-        //console.log(`Esto pasa a datosCliente: ${datoCliente}`)
+        console.log(`Esto pasa a datosCliente: ${datoCliente}`)
         cadS9 = ""
         /*
         datoCliente = cadS9.substr(cadS9.indexOf('+CMT:'),cadS9.length)
         console.log(datoCliente)*/
     }
+
 })//FIN DE RUTINA DE LECTURA DEL PUERTO SERIAL
 
 //evento de error
