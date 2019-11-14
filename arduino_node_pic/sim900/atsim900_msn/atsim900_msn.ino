@@ -37,8 +37,8 @@ void setup() {
   pinMode(push9, INPUT);//PSUH PARA ENVIAR OTRO MSN
 }
 
-//msn de saludo
-void enviarMensaje(String numCli) {
+///////////////////////////////////////////////////////////////////////////////formato Incorrecto
+void formatoIncorrecto(String numCli) {
     //Serial.println("Enviando SMS...");
     /*
     sim900.print("AT+CMGF=1\r");
@@ -59,6 +59,48 @@ void enviarMensaje(String numCli) {
     digitalWrite(led4,LOW);
     digitalWrite(led3,LOW);
   }
+///////////////////////////////////////////////////////////////////////////////formato Incorrecto
+
+//********************************************************************************Recarga Exitosa
+void RecargaExitosa(String numCli) {
+    
+    numCli = "AT+CMGS=\"" + numCli + "\"";
+    
+    sim900.println(numCli);
+    delay(500);
+    sim900.println("El numero se ha recargado exitosamente");//texto del sms
+    delay(100);
+    sim900.println((char)26);//comando de finilizacion 
+    delay(100);
+    sim900.println();
+    delay(2000);
+    
+    numCli = "";
+    digitalWrite(led4,LOW);
+    digitalWrite(led3,LOW);
+  }
+//********************************************************************************Recarga Exitosa
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Numero no esta en la base
+void NumNoBase(String numCli) {
+    
+    numCli = "AT+CMGS=\"" + numCli + "\"";
+    
+    sim900.println(numCli);
+    delay(500);
+    sim900.println("El numero se ha recargado exitosamente");//texto del sms
+    delay(100);
+    sim900.println((char)26);//comando de finilizacion 
+    delay(100);
+    sim900.println();
+    delay(2000);
+    
+    numCli = "";
+    digitalWrite(led4,LOW);
+    digitalWrite(led3,LOW);
+  }
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Numero no esta en la base
+
 
 /*
 //responde a msn
@@ -130,10 +172,12 @@ void loop() {
   if(digitalRead(push6)==1){
       delay(20);
       String thisNumCli = "4661016976";
-      enviarMensaje(thisNumCli);
+      formatoIncorrecto(thisNumCli);
     }
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><>>prueba el envio de sms
 
+  //RS:formato incorrecto, RK: recarga exitosa, RB: numero no en la base de datos################
+  
   //sacar el numero de la cadena RS, para identificar que es un msn que debe enviarse a l cliente
   if(datosPc == "RS4661016976"){
       Serial.println();
@@ -141,7 +185,7 @@ void loop() {
       numeroCliente = datosPc.substring(2,12);
       Serial.print(numeroCliente);
       if(numeroCliente == "4661016976"){digitalWrite(led3,HIGH);}
-      enviarMensaje(numeroCliente);
+      formatoIncorrecto(numeroCliente);
       datosPc="";
     }
 

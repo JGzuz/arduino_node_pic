@@ -40,20 +40,20 @@ function listarNumeros(lista){
 
 
 //cuando el numero no se encuentra en la base de datos 
-function cadenas() {
-    setTimeout(() => {
-        mySerial.write('ATC_ON') 
-    },10000)
+function NumNoBase(alNumero) {
     setTimeout(()=>{
-        mySerial.write('ATC_OFF')
-    },15000)
+        alNumero = "RB" + alNumero
+        mySerial.write(alNumero)
+        alNumero = ""
+    }, 500)
 }
 
 //para cuando la recarga se realizo correctamente
-function RecargaOk() {
+function RecargaOk(enviarANumber) {
     setTimeout(()=>{
-        
-        mySerial.write('RECARGA_OK')
+        enviarANumber = "RK" + enviarANumber
+        mySerial.write(enviarANumber)
+        enviarANumber = ""
     }, 500)
 }
 
@@ -86,12 +86,12 @@ mySerial.on("open", function() {
 })
 
 //filtra el numero para comprovar si esta en basesita
-async function recargaNum(param1) {
+async function recargaNum(recargaEsteNum, sendAEsteNum) {
     arrayPos = 0
     return new Promise((resolve, reject)=>{
         setTimeout(()=>{
             resolve(numOK2 = clientes.filter(verificaNumero))
-        },1000)
+        },500)
     })
 }
 
@@ -101,15 +101,16 @@ function verificaNumero(cliente) {//numArduino =>
     
     if(cliente.numero === parseInt(chargeNum)){
         console.log(`Se encontro una coincidencia: ${cliente.numero} == ${chargeNum}`)
-        RecargaOk()
+        RecargaOk(solicitaNum)
         setTimeout(()=>{
             console.log(`El numero ${chargeNum} se ha recargado exitosamente`)
             console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>END`)
-        },1000)
+        },500)
     }
     else{
         arrayPos++
         if(arrayPos == clientes.length){
+            NumNoBase(solicitaNum)
             console.log("El numero no se encontro en la base de datos")
             console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>END`)
         }
@@ -175,7 +176,7 @@ function Seccionador(mensaje) {
 
     //verifica que sea un numero de 10 digitos, si los es procede al proceso de recarga
     if(!isNaN(chargeNum) && (chargeNum.length == 10)){//si es un numero 
-        recargaNum(chargeNum)
+        recargaNum(chargeNum, solicitaNum)
     }
 
     if(isNaN(chargeNum) || chargeNum.length < 10){//cuando no es un numero o no esta en el formato correcto
