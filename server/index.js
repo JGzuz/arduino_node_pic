@@ -39,9 +39,8 @@ function listarNumeros(lista){
 }*/
 
 
-
+//cuando el numero no se encuentra en la base de datos 
 function cadenas() {
-    
     setTimeout(() => {
         mySerial.write('ATC_ON') 
     },10000)
@@ -50,18 +49,22 @@ function cadenas() {
     },15000)
 }
 
+//para cuando la recarga se realizo correctamente
 function RecargaOk() {
     setTimeout(()=>{
+        
         mySerial.write('RECARGA_OK')
     }, 500)
 }
 
+//para cuando el mensaje no es un numero de 10 digitos
 function formatoIncorrecto(longMensaje, sendToNumber) {
     if(longMensaje.length <= 20){
         setTimeout(() => {
             //msn cuando el numero no viene en el formato correcto
-            sendToNumber = ("RS" + sendToNumber + " 4")
+            sendToNumber = "RS" + sendToNumber
             mySerial.write(sendToNumber)//sin formato, enviar msn al cliente
+            //mySerial.write()
             sendToNumber = ""
         }, 500)
     }
