@@ -6,6 +6,7 @@ String datosSim="";
 String datosPc="";
 String numaux="4661016976";
 String numeroCliente="";
+String numeroRechar="";
 const int led2 = 2;
 const int led3 = 3; 
 const int led4 = 4;
@@ -63,13 +64,13 @@ void formatoIncorrecto(String numCli) {
 ///////////////////////////////////////////////////////////////////////////////formato Incorrecto
 
 //********************************************************************************Recarga Exitosa
-void RecargaExitosa(String numCli) {
+void RecargaExitosa(String numCli, String numRechRk) {
     
     numCli = "AT+CMGS=\"" + numCli + "\"";
     
     sim900.println(numCli);
     delay(500);
-    sim900.println("El numero se ha recargado exitosamente");//texto del sms
+    sim900.println("El numero " + numRechRk + " se ha recargado exitosamente");//texto del sms
     delay(100);
     sim900.println((char)26);//comando de finilizacion 
     delay(100);
@@ -83,13 +84,13 @@ void RecargaExitosa(String numCli) {
 //********************************************************************************Recarga Exitosa
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Numero no esta en la base
-void NumNoBase(String numCli) {
+void NumNoBase(String numCli, String numRechRb) {
     
     numCli = "AT+CMGS=\"" + numCli + "\"";
     
     sim900.println(numCli);
     delay(500);
-    sim900.println("El numero no se encuentra en la base de datos");//texto del sms
+    sim900.println("El numero " + numRechRb + " no se encuentra en la base de datos");//texto del sms
     delay(100);
     sim900.println((char)26);//comando de finilizacion 
     delay(100);
@@ -113,8 +114,14 @@ void chooseOneMsn(String numbers){
         Serial.print(numeroCliente);
         if(numeroCliente == "4661016976"){digitalWrite(led3,HIGH);}
             if(escogerRespuesta == "RS"){formatoIncorrecto(numeroCliente);}
-            if(escogerRespuesta == "RK"){RecargaExitosa(numeroCliente);}
-            if(escogerRespuesta == "RB"){NumNoBase(numeroCliente);}
+            if(escogerRespuesta == "RK"){
+              numeroRechar = numbers.substring(12,22);
+              RecargaExitosa(numeroCliente, numeroRechar);
+              }
+            if(escogerRespuesta == "RB"){
+              numeroRechar = numbers.substring(12,22);
+              NumNoBase(numeroCliente, numeroRechar);
+              }
             datosPc="";
       }
   }

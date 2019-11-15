@@ -40,18 +40,18 @@ function listarNumeros(lista){
 
 
 //cuando el numero no se encuentra en la base de datos 
-function NumNoBase(alNumero) {
+function NumNoBase(alNumero, recharNumBd) {
     setTimeout(()=>{
-        alNumero = "RB" + alNumero
+        alNumero = "RB" + alNumero + recharNumBd
         mySerial.write(alNumero)
         alNumero = ""
     }, 500)
 }
 
 //para cuando la recarga se realizo correctamente
-function RecargaOk(enviarANumber) {
+function RecargaOk(enviarANumber, recharNumRk) {
     setTimeout(()=>{
-        enviarANumber = "RK" + enviarANumber
+        enviarANumber = "RK" + enviarANumber + recharNumRk
         mySerial.write(enviarANumber)
         enviarANumber = ""
     }, 500)
@@ -101,7 +101,7 @@ function verificaNumero(cliente) {//numArduino =>
     
     if(cliente.numero === parseInt(chargeNum)){
         console.log(`Se encontro una coincidencia: ${cliente.numero} == ${chargeNum}`)
-        RecargaOk(solicitaNum)
+        RecargaOk(solicitaNum, chargeNum)
         setTimeout(()=>{
             console.log(`El numero ${chargeNum} se ha recargado exitosamente`)
             console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>END`)
@@ -110,8 +110,8 @@ function verificaNumero(cliente) {//numArduino =>
     else{
         arrayPos++
         if(arrayPos == clientes.length){
-            NumNoBase(solicitaNum)
-            console.log("El numero no se encontro en la base de datos")
+            NumNoBase(solicitaNum, chargeNum)
+            console.log(`El numero ${chargeNum} no se encontro en la base de datos`)
             console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>END`)
         }
     }
