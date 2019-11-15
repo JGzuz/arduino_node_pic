@@ -48,7 +48,7 @@ void formatoIncorrecto(String numCli) {
     
     sim900.println(numCli);
     delay(500);
-    sim900.println("Formato incorrecto");//texto del sms
+    sim900.println("Formato incorrecto, envie un numero de 10 digitos sin espacios ni otros tipo de caracteres");//texto del sms
     delay(100);
     sim900.println((char)26);//comando de finilizacion 
     delay(100);
@@ -88,7 +88,7 @@ void NumNoBase(String numCli) {
     
     sim900.println(numCli);
     delay(500);
-    sim900.println("El numero se ha recargado exitosamente");//texto del sms
+    sim900.println("El numero no se encuentra en la base de datos");//texto del sms
     delay(100);
     sim900.println((char)26);//comando de finilizacion 
     delay(100);
@@ -176,9 +176,9 @@ void loop() {
     }
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><>>prueba el envio de sms
 
-  //RS:formato incorrecto, RK: recarga exitosa, RB: numero no en la base de datos################
+  //############RS:formato incorrecto, RK: recarga exitosa, RB: numero no en la base de datos################
   
-  //sacar el numero de la cadena RS, para identificar que es un msn que debe enviarse a l cliente
+  //=============================================================================formato incorrecto
   if(datosPc == "RS4661016976"){
       Serial.println();
       digitalWrite(led4,HIGH);
@@ -188,7 +188,31 @@ void loop() {
       formatoIncorrecto(numeroCliente);
       datosPc="";
     }
+  //=============================================================================================
 
+  //recarga ok----------------------------------------------------------------recarga ok
+  if(datosPc == "RK4661016976"){
+      Serial.println();
+      digitalWrite(led4,HIGH);
+      numeroCliente = datosPc.substring(2,12);
+      Serial.print(numeroCliente);
+      if(numeroCliente == "4661016976"){digitalWrite(led3,HIGH);}
+      RecargaExitosa(numeroCliente);
+      datosPc="";
+    }
+  //recarga ok----------------------------------------------------------------recarga ok
+
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>NunNoBase
+  if(datosPc == "RB4661016976"){
+      Serial.println();
+      digitalWrite(led4,HIGH);
+      numeroCliente = datosPc.substring(2,12);
+      Serial.print(numeroCliente);
+      if(numeroCliente == "4661016976"){digitalWrite(led3,HIGH);}
+      NumNoBase(numeroCliente);
+      datosPc="";
+    }
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>NunNoBase
    /*
    //****************************************************segundo msn de prueba
    if(digitalRead(push9)==1){
