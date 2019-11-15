@@ -1,6 +1,7 @@
 #include <SoftwareSerial.h>
 SoftwareSerial sim900(7, 8); //Rx: 7, Tx: 8
 char caracter;
+String escogerRespuesta = "";
 String datosSim="";
 String datosPc="";
 String numaux="4661016976";
@@ -101,23 +102,23 @@ void NumNoBase(String numCli) {
   }
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Numero no esta en la base
 
-
-/*
-//responde a msn
-void respondeMsn(thisNumCli){
-    sim900.println("AT+CMGS=\"thisNumCli\"");
-    delay(500);
-    sim900.println("Formato incorrecto, envie un numero de 10 digitos sin espacios ni otro tipo de caracteres");//texto del sms
-    delay(100);
-    sim900.println((char)26);//comando de finilizacion 
-    delay(100);
-    sim900.println();
-    delay(2000);
+//elegir la respuesta'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+void chooseOneMsn(String numbers){
+    if(numbers.indexOf('R') >= 0){
+        escogerRespuesta = numbers.substring(0,2);
+        Serial.println();
+        Serial.println(escogerRespuesta);
+        digitalWrite(led4,HIGH);
+        numeroCliente = numbers.substring(2,12);
+        Serial.print(numeroCliente);
+        if(numeroCliente == "4661016976"){digitalWrite(led3,HIGH);}
+            if(escogerRespuesta == "RS"){formatoIncorrecto(numeroCliente);}
+            if(escogerRespuesta == "RK"){RecargaExitosa(numeroCliente);}
+            if(escogerRespuesta == "RB"){NumNoBase(numeroCliente);}
+            datosPc="";
+      }
   }
-//responde a msn*/
-
-
-
+//elegir la respuesta'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 void loop() {
   //////////////////////////////////////////////////////////Puerto serie
@@ -129,9 +130,9 @@ void loop() {
   if (Serial.available()){
       datosPc = Serial.readStringUntil('\n');
       //sim900.print("AT\r");
-      
       sim900.print(datosPc);
       sim900.print("\r");
+      chooseOneMsn(datosPc);
     }//////////////////////////////////////////////////////Puerto serie
 
   //simula recarga realizada correctamente*************Recarga correcta
@@ -179,6 +180,7 @@ void loop() {
   //############RS:formato incorrecto, RK: recarga exitosa, RB: numero no en la base de datos################
   
   //=============================================================================formato incorrecto
+  /*
   if(datosPc == "RS4661016976"){
       Serial.println();
       digitalWrite(led4,HIGH);
@@ -187,10 +189,11 @@ void loop() {
       if(numeroCliente == "4661016976"){digitalWrite(led3,HIGH);}
       formatoIncorrecto(numeroCliente);
       datosPc="";
-    }
+    }*/
   //=============================================================================================
 
   //recarga ok----------------------------------------------------------------recarga ok
+  /*
   if(datosPc == "RK4661016976"){
       Serial.println();
       digitalWrite(led4,HIGH);
@@ -200,9 +203,11 @@ void loop() {
       RecargaExitosa(numeroCliente);
       datosPc="";
     }
+    */
   //recarga ok----------------------------------------------------------------recarga ok
 
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>NunNoBase
+  /*
   if(datosPc == "RB4661016976"){
       Serial.println();
       digitalWrite(led4,HIGH);
@@ -212,6 +217,7 @@ void loop() {
       NumNoBase(numeroCliente);
       datosPc="";
     }
+    */
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>NunNoBase
    /*
    //****************************************************segundo msn de prueba
