@@ -1,7 +1,7 @@
 const SerialPort = require("serialport")//importar modulo para comunicacion serial
 const Readline = SerialPort.parsers.Readline
 const parser = new Readline()
-const mySerial = new SerialPort("COM3", {baudRate: 19200})//configuracion puerto y velocidad de transmision
+const mySerial = new SerialPort("COM5", {baudRate: 19200})//configuracion puerto y velocidad de transmision
 
 
 //declaracion de varaibles
