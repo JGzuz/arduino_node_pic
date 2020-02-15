@@ -17,8 +17,8 @@ const int push6 = 6;//push boton para enviar msn
 const int push9 = 9;//push boton segundo boton 
 
 void setup() {
-  Serial.begin(19200);
-  sim900.begin(19200);
+  Serial.begin(57600);
+  sim900.begin(57600);
 
   sim900.print("A\r");
   delay(500);
