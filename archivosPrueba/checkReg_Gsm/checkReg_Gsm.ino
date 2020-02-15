@@ -12,7 +12,7 @@ SoftwareSerial sim900(7,8);
 
 String datosSim = "";
 String datosPc = "";
-String numAux = "4661016976";
+String numAux = "4111225115";
 String escogerRespuesta = "";
 String numeroChecador = "";//para guardar el numero del checador en cadena
 String verify = "gsmOkQ";
@@ -60,6 +60,7 @@ void loop() {
         Serial.println("salio de rutina de chequeo");digitalWrite(ledAsistencia,LOW);
         digitalWrite(ledCancelar,HIGH);delay(50);digitalWrite(ledCancelar,LOW);
         }
+        Serial.println("caso asistencia");
       checarHuella = getFingerprintIDez();
       Serial.println(checarHuella);
       if(checarHuella > 0){startSim900();delay(100);enviarId(verify, checarHuella);startSensorHuellas();}
