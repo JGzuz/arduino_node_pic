@@ -1,21 +1,21 @@
 //checar gsm con arduino mega uwu
 #include <Adafruit_Fingerprint.h>
-<<<<<<< HEAD
-SoftwareSerial sim900(50,51);
-SoftwareSerial mySerial(52, 53);
-=======
-SoftwareSerial sim900(52,53);
-SoftwareSerial mySerial(48, 49);
->>>>>>> 0e33eb091a75fb8480aa651b5e014b0796817dda
+SoftwareSerial sim900(50,51);//RX:50, 51:TX
+SoftwareSerial mySerial(52, 53);//RX:52, TX:53
 
 //declaracion de variables:
-#define buttonRegistrar 22
-#define buttonAsistencia 23
-#define ledCancelar 24
-#define buttonCancelar 25
-#define ledRegistrar 26
-#define ledAsistencia 27
-#define ledSendMsn 28
+#define ledCancelar 22
+#define ledRegistrar 23
+#define ledAsistencia 24
+#define ledSendMsn 25
+//26 otro led
+//27 otro led
+
+#define buttonRegistrar 28
+#define buttonAsistencia 29
+#define buttonCancelar 30
+#define buttonOk 31
+
 
 String datosSim = "";
 String datosPc = "";
@@ -37,6 +37,7 @@ void setup() {
   pinMode(buttonRegistrar, INPUT);                     
   pinMode(buttonAsistencia, INPUT);
   pinMode(buttonCancelar, INPUT);
+  pinMode(buttonOk, INPUT);
   pinMode(ledRegistrar, OUTPUT);                       
   pinMode(ledAsistencia, OUTPUT);
   pinMode(ledCancelar,OUTPUT);
@@ -56,16 +57,33 @@ void setup() {
 }
 
 void loop() {
-  //Rutina de chequeo de asistencia////////////////////////////////////////////////////////////
-  if(digitalRead(buttonAsistencia)==0){flagAsistencia = 1;startSensorHuellas();Serial.println("Entro a rutina de chequeo");}
-  if( (flagAsistencia == 1) ){
-      digitalWrite(ledAsistencia,HIGH);
-      if(digitalRead(buttonCancelar) == 0){
+  
+  if(digitalRead(buttonOk)==0){
+    digitalWrite(ledAsistencia,HIGH);
+    digitalWrite(ledRegistrar,HIGH);
+    digitalWrite(ledCancelar,HIGH);
+    digitalWrite(ledSendMsn,HIGH);
+    delay(800);
+    digitalWrite(ledAsistencia,LOW);
+    digitalWrite(ledRegistrar,LOW);
+    digitalWrite(ledCancelar,LOW);
+    digitalWrite(ledSendMsn,LOW);
+    
+    }
+
+    //boton de cancelar
+    if(digitalRead(buttonCancelar) == 0){
         startSim900();
         flagAsistencia = 0;
         Serial.println("salio de rutina de chequeo");digitalWrite(ledAsistencia,LOW);
         digitalWrite(ledCancelar,HIGH);delay(50);digitalWrite(ledCancelar,LOW);
         }
+  
+  //Rutina de chequeo de asistencia////////////////////////////////////////////////////////////
+  if(digitalRead(buttonAsistencia)==0){flagAsistencia = 1;startSensorHuellas();Serial.println("Entro a rutina de chequeo");}
+  if( (flagAsistencia == 1) ){
+      digitalWrite(ledAsistencia,HIGH);
+      
         Serial.println("caso asistencia");
       checarHuella = getFingerprintIDez();
       Serial.println(checarHuella);
@@ -112,16 +130,10 @@ void loop() {
       sim900.print("\r");
       chooseOneMsn(datosPc);
     }
-<<<<<<< HEAD
-
-}//fin del ciclo principal
-
-=======
    
 }//fin del ciclo principal
 
 
->>>>>>> 0e33eb091a75fb8480aa651b5e014b0796817dda
 //funcion para envio de msn que se hizo correcto
 void RegistroCorrecto(String thisDatosSim){
   digitalWrite(ledSendMsn, HIGH);
