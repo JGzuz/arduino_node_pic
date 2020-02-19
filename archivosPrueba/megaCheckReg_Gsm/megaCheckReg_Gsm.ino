@@ -1,7 +1,12 @@
 //checar gsm con arduino mega uwu
 #include <Adafruit_Fingerprint.h>
+<<<<<<< HEAD
 SoftwareSerial sim900(50,51);
 SoftwareSerial mySerial(52, 53);
+=======
+SoftwareSerial sim900(52,53);
+SoftwareSerial mySerial(48, 49);
+>>>>>>> 0e33eb091a75fb8480aa651b5e014b0796817dda
 
 //declaracion de variables:
 #define buttonRegistrar 22
@@ -107,9 +112,16 @@ void loop() {
       sim900.print("\r");
       chooseOneMsn(datosPc);
     }
+<<<<<<< HEAD
 
 }//fin del ciclo principal
 
+=======
+   
+}//fin del ciclo principal
+
+
+>>>>>>> 0e33eb091a75fb8480aa651b5e014b0796817dda
 //funcion para envio de msn que se hizo correcto
 void RegistroCorrecto(String thisDatosSim){
   digitalWrite(ledSendMsn, HIGH);
